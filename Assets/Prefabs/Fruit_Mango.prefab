@@ -4822,6 +4822,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   whole: {fileID: 5194491653529377344}
   sliced: {fileID: 8832623253198942552}
+  comboPopup: {fileID: 8788164767786686419, guid: 5dff49fd13b2984468a975c968a8847f,
+    type: 3}
   pointsValue: 10
 --- !u!65 &1559334441511816527
 BoxCollider:

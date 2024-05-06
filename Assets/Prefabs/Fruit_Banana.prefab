@@ -4822,6 +4822,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   whole: {fileID: 4986830240414512971}
   sliced: {fileID: 1651015425081340389}
+  comboPopup: {fileID: 8788164767786686419, guid: c01390a5e5c133946afce99cb04b5c2e,
+    type: 3}
   pointsValue: 10
 --- !u!65 &1317916569413619734
 BoxCollider:
@@ -4863,8 +4865,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.0070719575, y: 0.010337505, z: 0.019945154}
-  m_Center: {x: -0.000008041271, y: 0.00035474868, z: 0.014313807}
+  m_Size: {x: 0.0070719584, y: 0.010556956, z: 0.020125205}
+  m_Center: {x: -2.469103e-10, y: 0.0082849385, z: 0.010430577}
 --- !u!54 &4915530240367962421
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -4892,8 +4894,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.007063076, y: 0.020289795, z: 0.008752457}
-  m_Center: {x: 0, y: -0.0025576914, z: 0.0021672426}
+  m_Size: {x: 0.007063077, y: 0.019877667, z: 0.008752236}
+  m_Center: {x: 8.236643e-11, y: -0.002763759, z: 0.0021671313}
 --- !u!1001 &1651015425081243463
 PrefabInstance:
   m_ObjectHideFlags: 0
