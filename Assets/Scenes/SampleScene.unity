@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 170076734}
-  m_IndirectSpecularColor: {r: 0.43632793, g: 0.4747123, b: 0.51471514, a: 1}
+  m_IndirectSpecularColor: {r: 0.43632814, g: 0.47471273, b: 0.5147158, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -463,8 +463,8 @@ MonoBehaviour:
   fruitPrefabs:
   - {fileID: 455667125017893398, guid: ca5d3933bdda93f4bb95dfaac4f555b2, type: 3}
   - {fileID: 455667125017893398, guid: 69c92293a99231844a6ffa9909c1c296, type: 3}
-  - {fileID: 455667125017893398, guid: 69c92293a99231844a6ffa9909c1c296, type: 3}
-  - {fileID: 7153199784115397361, guid: ef148bfa49b9aaf4795a02400fbabb80, type: 3}
+  - {fileID: 4856601652244212735, guid: 11aa775b2418c1e449359a0f968fb58d, type: 3}
+  - {fileID: 4856601652244212735, guid: 2884a81f81e2e3e41b4a3448bdeab490, type: 3}
   - {fileID: 7153199784115397361, guid: ef148bfa49b9aaf4795a02400fbabb80, type: 3}
   bombPrefab: {fileID: 8784961862331081433, guid: 51daa2417bbab1d4788dc2cf2d4cc128,
     type: 3}
