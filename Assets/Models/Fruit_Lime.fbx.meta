@@ -1,18 +1,14 @@
 fileFormatVersion: 2
-guid: b773f4463f76b9343abfc1dc64a1a077
+guid: 9ed051cb93337264cad35c62dabb7ea6
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
     100000: //RootNode
     400000: //RootNode
-    2100000: green2
-    2100002: green1
-    2100004: red
-    2100006: white
-    2100008: black
+    2100000: green.003
     2300000: //RootNode
     3300000: //RootNode
-    4300000: watermalon-half
+    4300000: lime
   externalObjects: {}
   materials:
     importMaterials: 1

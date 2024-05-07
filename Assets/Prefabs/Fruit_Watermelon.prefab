@@ -4712,7 +4712,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100004, guid: b773f4463f76b9343abfc1dc64a1a077, type: 3}
+  - {fileID: 2100014, guid: 40ec0320613d8024090f101a6a9174ba, type: 3}
   - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
@@ -4837,7 +4837,7 @@ MonoBehaviour:
   sliced: {fileID: 1651015425081340387}
   comboPopup: {fileID: 8788164767786686419, guid: ad5954bc848e88b439b8d636c33be5f9,
     type: 3}
-  pointsValue: 20
+  pointsValue: 10
 --- !u!54 &4573061847378839250
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -4956,6 +4956,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Fruit_Whole
       objectReference: {fileID: 0}
+    - target: {fileID: 3300000, guid: ff52031b4577fdc40961b42668940b8b, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 4300000, guid: ff52031b4577fdc40961b42668940b8b, type: 3}
     - target: {fileID: 276702545302499064, guid: 101bd84b2370e6645a7bf7cfbc6855a1,
         type: 3}
       propertyPath: m_Name

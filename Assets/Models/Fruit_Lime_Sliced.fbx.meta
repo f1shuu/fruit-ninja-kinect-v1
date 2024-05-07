@@ -1,18 +1,22 @@
 fileFormatVersion: 2
-guid: 8f1f473c08a59dc4c80cf73f4e31d592
+guid: d24b41ff5ce4c23458f3b69f1fa35041
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
-    100000: //RootNode
-    400000: //RootNode
-    2100000: redorange
-    2100002: orange
-    2100004: red
-    2100006: orangeyelow
-    2100008: yelow
-    2300000: //RootNode
-    3300000: //RootNode
-    4300000: Sphere
+    100000: bottom
+    100002: //RootNode
+    100004: top
+    400000: bottom
+    400002: //RootNode
+    400004: top
+    2100000: green.003
+    2100002: white.003
+    2300000: bottom
+    2300002: top
+    3300000: bottom
+    3300002: top
+    4300000: top
+    4300002: bottom
   externalObjects: {}
   materials:
     importMaterials: 1
