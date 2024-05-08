@@ -68,8 +68,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1295646682009011245}
   - component: {fileID: 6219892516282620087}
-  - component: {fileID: 130239717820993782}
   - component: {fileID: 114959118534048388}
+  - component: {fileID: 623035509265246547}
   m_Layer: 0
   m_Name: Fruit_Lemon
   m_TagString: Untagged
@@ -110,19 +110,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!135 &130239717820993782
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4856601652244212735}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &114959118534048388
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -140,6 +127,19 @@ MonoBehaviour:
   comboPopup: {fileID: 8788164767786686419, guid: 351d63f4a6f761f438737a676f30a5e7,
     type: 3}
   pointsValue: 20
+--- !u!65 &623035509265246547
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4856601652244212735}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2, y: 3, z: 2}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6560547783397572787
 GameObject:
   m_ObjectHideFlags: 0

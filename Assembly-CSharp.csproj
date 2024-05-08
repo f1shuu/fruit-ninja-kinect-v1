@@ -53,11 +53,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-     <Compile Include="Assets\DepthColliderDemo\Scripts\DepthImageViewer.cs" />
-     <Compile Include="Assets\DepthColliderDemo\Scripts\EggMover.cs" />
-     <Compile Include="Assets\DepthColliderDemo\Scripts\EggSpawner.cs" />
-     <Compile Include="Assets\GesturesDemo\Scripts\GestureListener.cs" />
-     <Compile Include="Assets\GesturesDemo\Scripts\PresentationScript.cs" />
      <Compile Include="Assets\KinectScripts\AvatarController.cs" />
      <Compile Include="Assets\KinectScripts\AvatarControllerClassic.cs" />
      <Compile Include="Assets\KinectScripts\Cubeman\CubemanController.cs" />
