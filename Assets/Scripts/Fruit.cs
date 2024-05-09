@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using System.Collections;
 
 public class Fruit : MonoBehaviour
 {
@@ -61,7 +62,10 @@ public class Fruit : MonoBehaviour
         foundGameManager.AddScore(pointsValue);
             if(foundGameManager.CheckIfCombo())
             {
-                ShowComboCount(foundGameManager.getComboCount());
+                int comboCount = foundGameManager.getComboCount();
+                Vector3 popupPosition = transform.position;
+                ShowComboCount(comboCount);
+                StartCoroutine(AddComboScore(foundGameManager, comboCount, popupPosition));
             }
         }
 
@@ -116,6 +120,23 @@ public class Fruit : MonoBehaviour
             var pop = Instantiate(comboPopup, transform.position, Quaternion.identity);
             pop.GetComponent<TextMesh>().text = "Combo x " + comboCount;
         }
+    }
+
+    private IEnumerator AddComboScore(GameManager foundGameManager, int comboCount, Vector3 popupPosition)
+    {
+        yield return new WaitForSeconds(0.8f);
+
+        if(foundGameManager.getComboCount() == comboCount)
+        {
+            var pop = Instantiate(comboPopup, popupPosition, Quaternion.identity);
+            int points = comboCount;
+            var textMesh = pop.GetComponent<TextMesh>();
+            textMesh.text = "Combo reward: "+ points;
+            textMesh.color = new Color32(255, 255, 255, 255);
+            textMesh.fontStyle = FontStyle.Italic;
+            foundGameManager.AddScore(points);
+        }
+
     }
 
     private void Quit() {
