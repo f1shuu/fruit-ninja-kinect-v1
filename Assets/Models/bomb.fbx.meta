@@ -8,9 +8,13 @@ ModelImporter:
     2100000: blackblue
     2100002: grey
     2100004: brown
+    2100006: Bomb_Black
+    2100008: Bomb_Grey
+    2100010: Bomb_Brown
     2300000: //RootNode
     3300000: //RootNode
     4300000: Sphere
+    4300002: Bomb
   externalObjects: {}
   materials:
     importMaterials: 1
