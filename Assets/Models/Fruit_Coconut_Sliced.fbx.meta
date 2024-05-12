@@ -6,17 +6,29 @@ ModelImporter:
     100000: Bottom
     100002: //RootNode
     100004: Top
+    100006: Coconut_Bottom
+    100008: Coconut_Top
     400000: Bottom
     400002: //RootNode
     400004: Top
+    400006: Coconut_Bottom
+    400008: Coconut_Top
     2100000: Brown
     2100002: White
+    2100004: Coconut_Brown
+    2100006: Coconut_White
     2300000: Bottom
     2300002: Top
+    2300004: Coconut_Bottom
+    2300006: Coconut_Top
     3300000: Bottom
     3300002: Top
+    3300004: Coconut_Bottom
+    3300006: Coconut_Top
     4300000: Bottom
     4300002: Top
+    4300004: Coconut_Bottom
+    4300006: Coconut_Top
   externalObjects: {}
   materials:
     importMaterials: 1

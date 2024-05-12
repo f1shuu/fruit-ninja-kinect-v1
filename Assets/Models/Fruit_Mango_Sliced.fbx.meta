@@ -6,9 +6,13 @@ ModelImporter:
     100000: Bottom
     100002: //RootNode
     100004: Top
+    100006: Mango_Bottom
+    100008: Mango_Top
     400000: Bottom
     400002: //RootNode
     400004: Top
+    400006: Mango_Bottom
+    400008: Mango_Top
     2100000: redorange
     2100002: orange
     2100004: red.001
@@ -19,12 +23,23 @@ ModelImporter:
     2100014: red.004
     2100016: orangeyelow.004
     2100018: yelow.004
+    2100020: Mango_Orange
+    2100022: Mango_Orange_Yellow
+    2100024: Mango_Yellow
+    2100026: Mango_Orange_Red
+    2100028: Mango_Red
     2300000: Bottom
     2300002: Top
+    2300004: Mango_Bottom
+    2300006: Mango_Top
     3300000: Bottom
     3300002: Top
+    3300004: Mango_Bottom
+    3300006: Mango_Top
     4300000: Bottom
     4300002: Top
+    4300004: Mango_Top
+    4300006: Mango_Bottom
   externalObjects: {}
   materials:
     importMaterials: 1

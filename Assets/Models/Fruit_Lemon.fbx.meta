@@ -6,9 +6,11 @@ ModelImporter:
     100000: //RootNode
     400000: //RootNode
     2100000: yellow.002
+    2100002: Lemon_Yellow
     2300000: //RootNode
     3300000: //RootNode
     4300000: lemon
+    4300002: Lemon
   externalObjects: {}
   materials:
     importMaterials: 1

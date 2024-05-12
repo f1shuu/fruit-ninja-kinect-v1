@@ -7,9 +7,12 @@ ModelImporter:
     400000: //RootNode
     2100000: green2.002
     2100002: green1.002
+    2100004: Watermelon_Dark_Green
+    2100006: Watermelon_Light_Green
     2300000: //RootNode
     3300000: //RootNode
     4300000: watermelon
+    4300002: Watermelon
   externalObjects: {}
   materials:
     importMaterials: 1

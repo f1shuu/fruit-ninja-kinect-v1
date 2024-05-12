@@ -6,19 +6,33 @@ ModelImporter:
     100000: Bottom
     100002: //RootNode
     100004: Top
+    100006: Kiwi_Bottom
+    100008: Kiwi_Top
     400000: Bottom
     400002: //RootNode
     400004: Top
+    400006: Kiwi_Bottom
+    400008: Kiwi_Top
     2100000: Black.001
     2100002: Brown.006
     2100004: Lightgreen.001
     2100006: Green.001
+    2100008: Kiwi_Black
+    2100010: Kiwi_Brown
+    2100012: Kiwi_Light_Green
+    2100014: Kiwi_Dark_Green
     2300000: Bottom
     2300002: Top
+    2300004: Kiwi_Bottom
+    2300006: Kiwi_Top
     3300000: Bottom
     3300002: Top
+    3300004: Kiwi_Bottom
+    3300006: Kiwi_Top
     4300000: Bottom
     4300002: Top
+    4300004: Kiwi_Bottom
+    4300006: Kiwi_Top
   externalObjects: {}
   materials:
     importMaterials: 1

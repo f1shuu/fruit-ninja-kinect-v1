@@ -6,17 +6,29 @@ ModelImporter:
     100000: bottom
     100002: //RootNode
     100004: top
+    100006: Lemon_Bottom
+    100008: Lemon_Top
     400000: bottom
     400002: //RootNode
     400004: top
+    400006: Lemon_Bottom
+    400008: Lemon_Top
     2100000: yellow.002
     2100002: white.004
+    2100004: Lemon_Yellow
+    2100006: Lemon_White
     2300000: bottom
     2300002: top
+    2300004: Lemon_Bottom
+    2300006: Lemon_Top
     3300000: bottom
     3300002: top
+    3300004: Lemon_Bottom
+    3300006: Lemon_Top
     4300000: top
     4300002: bottom
+    4300004: Lemon_Top
+    4300006: Lemon_Bottom
   externalObjects: {}
   materials:
     importMaterials: 1
