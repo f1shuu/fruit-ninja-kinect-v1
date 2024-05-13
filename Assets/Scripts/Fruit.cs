@@ -92,8 +92,8 @@ public class Fruit : MonoBehaviour
     {
         if(CompareTag("Play Button"))
         {
-            quitButton = GameObject.FindWithTag("Quit Button");
-            Destroy(quitButton);  
+            Destroy(GameObject.FindWithTag("Quit Button"));
+            Destroy(GameObject.Find("MainMenuBackground"));
             FindObjectOfType<GameManager>().NewGame();
           
         }
