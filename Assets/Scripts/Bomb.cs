@@ -5,6 +5,7 @@ public class Bomb : MonoBehaviour
 
     public GameObject bomb;
     private MeshFilter mesh;
+    private MeshFilter outlineMesh;
     private ParticleSystem explosion;
     private ParticleSystem smoke;
     private Collider bombCollider;
@@ -21,6 +22,7 @@ public class Bomb : MonoBehaviour
         explosion = transform.GetChild(0).GetComponentInChildren<ParticleSystem>();
         smoke = transform.GetChild(1).GetComponentInChildren<ParticleSystem>();
         mesh = bomb.GetComponent<MeshFilter>();
+        outlineMesh = transform.GetChild(2).GetComponentInChildren<MeshFilter>();
         bombCollider = GetComponent<Collider>();
         randomX = Random.Range(-1f, 1f);
         randomY = Random.Range(-1f, 1f);
@@ -44,6 +46,7 @@ public class Bomb : MonoBehaviour
             foundGameManager.AddScore(pointsValue);
             foundGameManager.ResetCombo();
             Destroy(mesh);
+            Destroy(outlineMesh);
             FindObjectOfType<GameManager>().RemoveLife();
             bombCollider.enabled = false;
         }

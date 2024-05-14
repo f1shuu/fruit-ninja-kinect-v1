@@ -11,6 +11,8 @@ public class Fruit : MonoBehaviour
     private Collider fruitCollider;
     private ParticleSystem juice;
 
+    private MeshFilter outlineMesh;
+
     private GameObject quitButton;
 
     public int pointsValue = 10;
@@ -35,6 +37,14 @@ public class Fruit : MonoBehaviour
         randomDirection.Normalize();
         randomSpeed = Random.Range(20f, 100f);
         foundGameManager = FindObjectOfType<GameManager>();
+        if(transform.childCount > 3)
+        {
+            Transform childTransform = transform.GetChild(3);
+            if(childTransform != null)
+            {
+                outlineMesh = childTransform.GetComponentInChildren<MeshFilter>();
+            }
+        }
     }
 
     private void Update()
@@ -60,6 +70,7 @@ public class Fruit : MonoBehaviour
         if (!CompareTag("Play Button") && !CompareTag("Quit Button"))
         {
         foundGameManager.AddScore(pointsValue);
+        foundGameManager.increaseSlicedFruitCount();
             if(foundGameManager.CheckIfCombo())
             {
                 int comboCount = foundGameManager.getComboCount();
@@ -72,6 +83,10 @@ public class Fruit : MonoBehaviour
 
         whole.SetActive(false);
         sliced.SetActive(true);
+        if (outlineMesh)
+        {
+            Destroy(outlineMesh);
+        }
 
         fruitCollider.enabled = false;
         juice.Play();
