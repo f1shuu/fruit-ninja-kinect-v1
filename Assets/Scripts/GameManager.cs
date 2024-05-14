@@ -16,11 +16,13 @@ public class GameManager : MonoBehaviour
 
     private Blade blade;
     private Spawner spawner;
+    private SpecialSpawner specialSpawner;
 
     private int score;
     private int lives;
     private float time;
     private int comboCount;
+    private int slicedFruitCount;
     private float comboTimeWindow = 0.8f;
     private float lastSliceTime;
 
@@ -28,7 +30,9 @@ public class GameManager : MonoBehaviour
     {
         blade = FindObjectOfType<Blade>();
         spawner = FindObjectOfType<Spawner>();
+        specialSpawner = FindObjectOfType<SpecialSpawner>();
         spawner.enabled = false;
+        specialSpawner.enabled = false;
     }
 
     private void Start()
@@ -42,8 +46,10 @@ public class GameManager : MonoBehaviour
 
         blade.enabled = true;
         spawner.enabled = true;  
+        specialSpawner.enabled = true;
 
         comboCount = 1;
+        slicedFruitCount = 0;
         score = 0;
         lives = 3;
         time = 60.0f;
@@ -92,6 +98,16 @@ public class GameManager : MonoBehaviour
         scoreText.text = "Score: " + score.ToString();
         CheckHighscore();
         UpdateHighScore();
+    }
+
+    public void increaseSlicedFruitCount()
+    {
+        slicedFruitCount += 1;
+    }
+
+    public int getSlicedFruitCount()
+    {
+        return slicedFruitCount;
     }
 
     public bool CheckIfCombo()
@@ -156,6 +172,7 @@ public class GameManager : MonoBehaviour
     {
         blade.enabled = false;
         spawner.enabled = false;
+        specialSpawner.enabled = false;
         StopAllCoroutines();
         StartCoroutine(GameOverSequence());
     }
