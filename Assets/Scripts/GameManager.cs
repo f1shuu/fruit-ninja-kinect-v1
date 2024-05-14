@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour
 {
     public Text scoreText;
     public Text highScoreText;
+    public Text doubleScoreText;
     public Text livesText;
     public Text playText;
     public Text quitText;
@@ -25,6 +26,8 @@ public class GameManager : MonoBehaviour
     private int slicedFruitCount;
     private float comboTimeWindow = 0.8f;
     private float lastSliceTime;
+
+    public float scoreMultiplier = 1f;
 
     private void Awake()
     {
@@ -87,6 +90,10 @@ public class GameManager : MonoBehaviour
 
     public void AddScore(int pointsAmount)
     {
+        if(pointsAmount > 0)
+        {
+            pointsAmount = Mathf.RoundToInt(pointsAmount * scoreMultiplier);
+        }
         if(score + pointsAmount >= 0)
         {
             score += pointsAmount;
@@ -98,6 +105,13 @@ public class GameManager : MonoBehaviour
         scoreText.text = "Score: " + score.ToString();
         CheckHighscore();
         UpdateHighScore();
+    }
+
+    public void ActivateMultiplier(float multiplier, float duration)
+    {
+        StartCoroutine(ResetMultiplier(duration));
+        scoreMultiplier = multiplier;
+        doubleScoreText.gameObject.SetActive(true);
     }
 
     public void increaseSlicedFruitCount()
@@ -225,6 +239,13 @@ public class GameManager : MonoBehaviour
             yield return null;
         }
 
+    }
+
+    private IEnumerator ResetMultiplier(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        scoreMultiplier = 1f;
+        doubleScoreText.gameObject.SetActive(false);
     }
 
 }

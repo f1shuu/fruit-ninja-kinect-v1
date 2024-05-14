@@ -24,9 +24,9 @@ public class Fruit : MonoBehaviour
     private Vector2 randomDirection;
     private float randomSpeed;
 
-    private GameManager foundGameManager;
+    public GameManager foundGameManager;
 
-    private void Awake()
+    public virtual void Awake()
     {
         fruitRigidbody = GetComponent<Rigidbody>();
         fruitCollider = GetComponent<Collider>();
@@ -63,7 +63,7 @@ public class Fruit : MonoBehaviour
 
     }
 
-    private void Slice(Vector3 direction = default(Vector3), Vector3 position = default(Vector3), float force = 0f)
+    public virtual void Slice(Vector3 direction = default(Vector3), Vector3 position = default(Vector3), float force = 0f)
     {
         isSliced = true;
 

@@ -78,6 +78,7 @@
      <Compile Include="Assets\Scripts\Bomb.cs" />
      <Compile Include="Assets\Scripts\CameraShake.cs" />
      <Compile Include="Assets\Scripts\ComboPopup.cs" />
+     <Compile Include="Assets\Scripts\DoublePoints_Banana.cs" />
      <Compile Include="Assets\Scripts\Fruit.cs" />
      <Compile Include="Assets\Scripts\GameManager.cs" />
      <Compile Include="Assets\Scripts\KinectBlade.cs" />
