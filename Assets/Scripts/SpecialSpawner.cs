@@ -10,10 +10,6 @@ public class SpecialSpawner : MonoBehaviour
     public GameObject[] fruitPrefabs;
 
 
-
-    public float minSpawnDelay = 0.25f;
-    public float maxSpawnDelay = 1f;
-
     private enum directionEnum
     {
         Right = 1,
@@ -45,6 +41,7 @@ public class SpecialSpawner : MonoBehaviour
 
     private void OnEnable()
     {
+        requiredSlicedFruits = requiredSlicedFruitsStep;
         StartCoroutine(Spawn());
     }
 
@@ -59,7 +56,6 @@ public class SpecialSpawner : MonoBehaviour
 
         while (enabled)
         {
-
             while (foundGameManager.getSlicedFruitCount() != requiredSlicedFruits)
             {
                 yield return null;
@@ -81,7 +77,7 @@ public class SpecialSpawner : MonoBehaviour
             fruit.GetComponent<Rigidbody>().AddForce(((int)spawnDirection == 1 ? 1 : -1) * fruit.transform.right * force, ForceMode.Impulse);
             requiredSlicedFruits += requiredSlicedFruitsStep;
 
-            yield return new WaitForSeconds(Random.Range(minSpawnDelay, maxSpawnDelay));
+            yield return new WaitForSeconds(0.25f);
         }
     }
 

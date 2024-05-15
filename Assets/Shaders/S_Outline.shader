@@ -1,4 +1,5 @@
-﻿Shader "Custom/Outline" {
+﻿Shader "Custom/Outline" 
+{
     Properties {
         _MainTex ("Main texture", 2D) = "white" {}
         _OutlineWidth ("Outline width", Range(0,0.1)) = 0
@@ -47,7 +48,7 @@
             float4 vert(appdata_base v) : SV_POSITION {
                 v2f o;
                 o.pos = UnityObjectToClipPos(v.vertex);
-                float3 normal = mul((float3x3) UNITY_MATRIX_MV, v.normal);
+                float3 normal =  UnityObjectToViewPos(v.normal);
                 normal.x *= UNITY_MATRIX_P[0][0];
                 normal.y *= UNITY_MATRIX_P[1][1];
                 o.pos.xy += normal.xy * _OutlineWidth;
@@ -71,7 +72,7 @@
         };
  
         void surf(Input IN, inout SurfaceOutput o) {
-           // o.Albedo = tex2D(_MainTex, IN.uv_MainTex);
+            o.Albedo = tex2D(_MainTex, IN.uv_MainTex);
         }
  
         ENDCG*/

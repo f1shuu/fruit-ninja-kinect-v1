@@ -7,13 +7,18 @@ public class GameManager : MonoBehaviour
     public Text scoreText;
     public Text highScoreText;
     public Text doubleScoreText;
+    public Text freezeText;
+    public Text frenzyText;
     public Text livesText;
     public Text playText;
     public Text quitText;
     public Text timerText;
     public Image fadeOutImage;
-    // public GameObject playButton;
-    // public GameObject quitButton;
+
+    private Color timerColor;
+    private Color freezeColor;
+    private Color scoreColor;
+    private Color doubleScoreColor;
 
     private Blade blade;
     private Spawner spawner;
@@ -22,6 +27,7 @@ public class GameManager : MonoBehaviour
     private int score;
     private int lives;
     private float time;
+    private bool isTimerPaused = false;
     private int comboCount;
     private int slicedFruitCount;
     private float comboTimeWindow = 0.8f;
@@ -36,6 +42,10 @@ public class GameManager : MonoBehaviour
         specialSpawner = FindObjectOfType<SpecialSpawner>();
         spawner.enabled = false;
         specialSpawner.enabled = false;
+        timerColor = timerText.color;
+        freezeColor = freezeText.color;
+        scoreColor = scoreText.color;
+        doubleScoreColor = doubleScoreText.color;
     }
 
     private void Start()
@@ -56,6 +66,7 @@ public class GameManager : MonoBehaviour
         score = 0;
         lives = 3;
         time = 60.0f;
+        scoreMultiplier = 1f;
         scoreText.text = "Score: " + score.ToString();
         livesText.text = "Lives: " + lives.ToString();
         timerText.text = "Time: " + time.ToString();
@@ -65,7 +76,13 @@ public class GameManager : MonoBehaviour
         timerText.gameObject.SetActive(true);
         playText.gameObject.SetActive(false);
         quitText.gameObject.SetActive(false);
+        doubleScoreText.gameObject.SetActive(false);
+        freezeText.gameObject.SetActive(false);
+        frenzyText.gameObject.SetActive(false);
+        isTimerPaused = false;
         lastSliceTime = Time.time;
+        scoreText.color = scoreColor;
+        timerText.color = timerColor;
         UpdateHighScore();
         StartCoroutine(Timer());
 
@@ -73,18 +90,18 @@ public class GameManager : MonoBehaviour
 
     private void ClearScene()
     {
-        Fruit[] fruits = FindObjectsOfType<Fruit>();
+    DestroyAllObjectsOfType<Fruit>();
+    DestroyAllObjectsOfType<Bomb>();
+    DestroyAllObjectsOfType<ComboPopup>();
+    }
 
-        foreach (Fruit fruit in fruits)
+    private void DestroyAllObjectsOfType<T>() where T : MonoBehaviour
+    {
+        T[] objects = FindObjectsOfType<T>();
+
+        foreach (T obj in objects)
         {
-            Destroy(fruit.gameObject);
-        }
-
-        Bomb[] bombs = FindObjectsOfType<Bomb>();
-
-        foreach (Bomb bomb in bombs)
-        {
-            Destroy(bomb.gameObject);
+            Destroy((obj as MonoBehaviour).gameObject);
         }
     }
 
@@ -112,7 +129,18 @@ public class GameManager : MonoBehaviour
         StartCoroutine(ResetMultiplier(duration));
         scoreMultiplier = multiplier;
         doubleScoreText.gameObject.SetActive(true);
+        scoreText.color = doubleScoreColor;
     }
+
+    public void StopTimer(float duration, float slowFactor)
+    {
+        StartCoroutine(ResumeTimer(duration));
+        isTimerPaused = true;
+        freezeText.gameObject.SetActive(true);
+        timerText.color = freezeColor;
+        Time.timeScale = slowFactor;
+    }
+
 
     public void increaseSlicedFruitCount()
     {
@@ -191,10 +219,11 @@ public class GameManager : MonoBehaviour
         StartCoroutine(GameOverSequence());
     }
 
+
     private IEnumerator GameOverSequence()
     {
         float elapsed = 0f;
-        float duration = 0.5f;
+        float duration = 0.6f;
 
         while (elapsed < duration)
         {
@@ -210,7 +239,6 @@ public class GameManager : MonoBehaviour
 
         ClearScene();
         NewGame();
-
         elapsed = 0f;
 
         while (elapsed < duration)
@@ -234,7 +262,10 @@ public class GameManager : MonoBehaviour
                 GameOver();
                 //yield break;
             }
-            time -= Time.deltaTime;
+            if(!isTimerPaused)
+            {
+                time -= Time.deltaTime;
+            }
             timerText.text = "Time: " + time.ToString("F0");
             yield return null;
         }
@@ -246,6 +277,16 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(duration);
         scoreMultiplier = 1f;
         doubleScoreText.gameObject.SetActive(false);
+        scoreText.color = scoreColor;
+    }
+
+    private IEnumerator ResumeTimer(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        isTimerPaused = false;
+        freezeText.gameObject.SetActive(false);
+        timerText.color = timerColor;
+        Time.timeScale = 1f;
     }
 
 }

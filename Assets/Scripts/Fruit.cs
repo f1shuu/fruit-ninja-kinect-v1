@@ -24,7 +24,8 @@ public class Fruit : MonoBehaviour
     private Vector2 randomDirection;
     private float randomSpeed;
 
-    public GameManager foundGameManager;
+    protected GameManager foundGameManager;
+
 
     public virtual void Awake()
     {
@@ -60,7 +61,6 @@ public class Fruit : MonoBehaviour
                 transform.Rotate(Vector2.up * Time.deltaTime * 20);
             }
         }
-
     }
 
     public virtual void Slice(Vector3 direction = default(Vector3), Vector3 position = default(Vector3), float force = 0f)
@@ -153,6 +153,8 @@ public class Fruit : MonoBehaviour
         }
 
     }
+
+        
 
     private void Quit() {
         #if UNITY_STANDALONE

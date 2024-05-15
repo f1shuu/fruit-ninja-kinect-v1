@@ -4826,7 +4826,7 @@ MonoBehaviour:
   comboPopup: {fileID: 8788164767786686419, guid: c01390a5e5c133946afce99cb04b5c2e,
     type: 3}
   pointsValue: 50
-  doublePointsDuration: 5
+  foundGameManager: {fileID: 0}
 --- !u!65 &1317916569413619734
 BoxCollider:
   m_ObjectHideFlags: 0

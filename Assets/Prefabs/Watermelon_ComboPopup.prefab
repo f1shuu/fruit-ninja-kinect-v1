@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 5907161760476132636}
   - component: {fileID: 899519964712749879}
   - component: {fileID: 6902325133857401171}
-  - component: {fileID: 5664746104022927494}
   - component: {fileID: 114057224964287482}
   - component: {fileID: 1287078871}
   m_Layer: 0
@@ -52,7 +51,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 6c9877be3f3421d48ae3cc1f82d53098, type: 3}
+  - {fileID: 2100000, guid: af2a4d5d466ba344c9c7b3dac6cc7d8c, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -94,21 +93,6 @@ TextMesh:
   m_Color:
     serializedVersion: 2
     rgba: 4281204527
---- !u!114 &5664746104022927494
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8788164767786686419}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 1573420865, guid: f70555f144d8491a825f0804e09c671c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
-  m_EffectDistance: {x: 4, y: -4}
-  m_UseGraphicAlpha: 1
 --- !u!114 &114057224964287482
 MonoBehaviour:
   m_ObjectHideFlags: 0
