@@ -66,11 +66,13 @@ public class Fruit : MonoBehaviour
     public virtual void Slice(Vector3 direction = default(Vector3), Vector3 position = default(Vector3), float force = 0f)
     {
         isSliced = true;
-
         if (!CompareTag("Play Button") && !CompareTag("Quit Button"))
         {
         foundGameManager.AddScore(pointsValue);
-        foundGameManager.increaseSlicedFruitCount();
+        if(!foundGameManager.getIsFrenzy())
+        {
+            foundGameManager.increaseSlicedFruitCount();
+        }
             if(foundGameManager.CheckIfCombo())
             {
                 int comboCount = foundGameManager.getComboCount();

@@ -7,6 +7,8 @@ public class SpecialSpawner : MonoBehaviour
 
     private directionEnum[] spawnAreaDirections;
 
+    public GameObject[] specialFruitPrefabs;
+
     public GameObject[] fruitPrefabs;
 
 
@@ -51,17 +53,23 @@ public class SpecialSpawner : MonoBehaviour
     }
 
     private IEnumerator Spawn()
-    {
-        yield return new WaitForSeconds(2f);
-
+    {   
         while (enabled)
         {
-            while (foundGameManager.getSlicedFruitCount() != requiredSlicedFruits)
+            while (foundGameManager.getSlicedFruitCount() != requiredSlicedFruits && !foundGameManager.getIsFrenzy())
             {
                 yield return null;
             }         
-
-            GameObject prefab = fruitPrefabs[Random.Range(0, fruitPrefabs.Length)];
+            
+            GameObject prefab;
+            if(foundGameManager.getIsFrenzy())
+            {
+                prefab = fruitPrefabs[Random.Range(0, fruitPrefabs.Length)];
+            }
+            else
+            {
+                prefab = specialFruitPrefabs[Random.Range(0, specialFruitPrefabs.Length)];
+            }
 
             int randomSpawnIndex = Random.Range(0, spawnAreas.Length);
             Collider spawnArea = spawnAreas[randomSpawnIndex];
@@ -75,11 +83,16 @@ public class SpecialSpawner : MonoBehaviour
 
             float force = Random.Range(minForce, maxForce);
             fruit.GetComponent<Rigidbody>().AddForce(((int)spawnDirection == 1 ? 1 : -1) * fruit.transform.right * force, ForceMode.Impulse);
-            requiredSlicedFruits += requiredSlicedFruitsStep;
+
+            if(!foundGameManager.getIsFrenzy())
+            {
+                requiredSlicedFruits += requiredSlicedFruitsStep;
+            }
 
             yield return new WaitForSeconds(0.25f);
         }
     }
+
 
     private Vector3 GetRandomPositionInBounds(Bounds bounds)
     {
@@ -89,4 +102,5 @@ public class SpecialSpawner : MonoBehaviour
             Random.Range(bounds.min.z, bounds.max.z)
         );
     }
+
 }

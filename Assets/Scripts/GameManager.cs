@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
 
     private Blade blade;
     private Spawner spawner;
-    private SpecialSpawner specialSpawner;
+    private SpecialSpawner specialSpawner; 
 
     private int score;
     private int lives;
@@ -32,6 +32,7 @@ public class GameManager : MonoBehaviour
     private int slicedFruitCount;
     private float comboTimeWindow = 0.8f;
     private float lastSliceTime;
+    private bool isFrenzy = false;
 
     public float scoreMultiplier = 1f;
 
@@ -139,6 +140,18 @@ public class GameManager : MonoBehaviour
         freezeText.gameObject.SetActive(true);
         timerText.color = freezeColor;
         Time.timeScale = slowFactor;
+    }
+
+    public void ActivateFrenzy(float duration) 
+    {
+        isFrenzy = true;
+        frenzyText.gameObject.SetActive(true);
+        StartCoroutine(FinishFrenzy(duration));
+    }
+
+    public bool getIsFrenzy()
+    {
+        return isFrenzy;
     }
 
 
@@ -288,5 +301,12 @@ public class GameManager : MonoBehaviour
         timerText.color = timerColor;
         Time.timeScale = 1f;
     }
+
+    private IEnumerator FinishFrenzy(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        frenzyText.gameObject.SetActive(false);
+        isFrenzy = false;
+    }    
 
 }

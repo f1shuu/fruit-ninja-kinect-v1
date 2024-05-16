@@ -3115,10 +3115,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aee0887a4c59f6d45a44636230e0d178, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  fruitPrefabs:
-  - {fileID: 455667125017893398, guid: cb4428bb51a5f2942bdb3b49d71eabee, type: 3}
-  - {fileID: 455667125017893398, guid: 28d1cd33ec168c44cb901381ae6ca807, type: 3}
+  specialFruitPrefabs:
   - {fileID: 455667125017893398, guid: 30280daa3308daf40b69476495fec247, type: 3}
+  - {fileID: 455667125017893398, guid: 28d1cd33ec168c44cb901381ae6ca807, type: 3}
+  - {fileID: 455667125017893398, guid: cb4428bb51a5f2942bdb3b49d71eabee, type: 3}
+  fruitPrefabs:
+  - {fileID: 455667125017893398, guid: 69c92293a99231844a6ffa9909c1c296, type: 3}
+  - {fileID: 4856601652244212735, guid: d6c1e7051578e8348bff70db05506db2, type: 3}
+  - {fileID: 4856601652244212735, guid: 61ff0496e30f00940a525fb44ad4fb37, type: 3}
+  - {fileID: 4856601652244212735, guid: 2884a81f81e2e3e41b4a3448bdeab490, type: 3}
+  - {fileID: 4856601652244212735, guid: 11aa775b2418c1e449359a0f968fb58d, type: 3}
+  - {fileID: 7153199784115397361, guid: ef148bfa49b9aaf4795a02400fbabb80, type: 3}
+  - {fileID: 455667125017893398, guid: ca5d3933bdda93f4bb95dfaac4f555b2, type: 3}
   minAngle: -10
   maxAngle: 10
   minForce: 18

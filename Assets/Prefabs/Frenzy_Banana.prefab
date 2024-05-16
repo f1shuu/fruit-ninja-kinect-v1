@@ -4766,7 +4766,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6111323552271250884}
   - component: {fileID: 1397726551666485598}
-  - component: {fileID: 4948520422669634413}
+  - component: {fileID: 114046258588247390}
   - component: {fileID: 1317916569413619734}
   m_Layer: 0
   m_Name: Frenzy_Banana
@@ -4809,7 +4809,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &4948520422669634413
+--- !u!114 &114046258588247390
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -4818,7 +4818,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 455667125017893398}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 99289a23509e1414eab411a85c087ee2, type: 3}
+  m_Script: {fileID: 11500000, guid: 7deb40f58c133554fa5da033ecd0f7d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   whole: {fileID: 5221426975561925461}
