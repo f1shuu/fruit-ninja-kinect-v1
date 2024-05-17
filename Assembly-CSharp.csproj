@@ -86,6 +86,7 @@
      <Compile Include="Assets\Scripts\KinectBlade.cs" />
      <Compile Include="Assets\Scripts\Spawner.cs" />
      <Compile Include="Assets\Scripts\SpecialSpawner.cs" />
+     <Compile Include="Assets\Scripts\Splatter.cs" />
      <None Include="Assets\Shaders\S_Outline.shader" />
  <Reference Include="Unity.PackageManagerUI.Editor">
  <HintPath>C:/Unity Projects/Fruit Ninja/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>

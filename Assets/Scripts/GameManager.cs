@@ -81,6 +81,7 @@ public class GameManager : MonoBehaviour
         freezeText.gameObject.SetActive(false);
         frenzyText.gameObject.SetActive(false);
         isTimerPaused = false;
+        isFrenzy = false;
         lastSliceTime = Time.time;
         scoreText.color = scoreColor;
         timerText.color = timerColor;
@@ -94,6 +95,7 @@ public class GameManager : MonoBehaviour
     DestroyAllObjectsOfType<Fruit>();
     DestroyAllObjectsOfType<Bomb>();
     DestroyAllObjectsOfType<ComboPopup>();
+    DestroyAllObjectsOfType<Splatter>();
     }
 
     private void DestroyAllObjectsOfType<T>() where T : MonoBehaviour

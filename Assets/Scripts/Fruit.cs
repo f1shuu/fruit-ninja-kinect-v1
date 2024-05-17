@@ -13,7 +13,6 @@ public class Fruit : MonoBehaviour
     private ParticleSystem juice;
 
     private List<GameObject> juiceSplatters = new List<GameObject>();
-    private float splatterLifeTime = 2f;
 
     private MeshFilter outlineMesh;
 
@@ -98,13 +97,14 @@ public class Fruit : MonoBehaviour
         fruitCollider.enabled = false;
         juice.Play();
         GameObject splatterPrefab = juiceSplatters[Random.Range(0, juiceSplatters.Count)];
+        float splatterLifespan = splatterPrefab.GetComponent<Splatter>().splatterLifespan;
         Color juiceColor = juice.GetComponent<Renderer>().material.color;
         Vector3 splatterPosition = transform.position;
         splatterPosition.z += 4f;
         GameObject splatter = Instantiate(splatterPrefab, splatterPosition, Quaternion.identity);
         SpriteRenderer splatterSpriteRenderer = splatter.GetComponent<SpriteRenderer>();
         splatterSpriteRenderer.color = juiceColor;
-        StartCoroutine(FadeOut(splatterLifeTime, splatter, splatterSpriteRenderer));
+        StartCoroutine(FadeOut(splatterLifespan, splatter, splatterSpriteRenderer));
         
 
         // float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
@@ -130,7 +130,7 @@ public class Fruit : MonoBehaviour
         }
         if(CompareTag("Quit Button"))
         {
-            Invoke("Quit", 1);
+            Invoke("Quit", 1f);
         }        
         if (other.CompareTag("KinectPlayer")) 
         {
@@ -175,12 +175,11 @@ public class Fruit : MonoBehaviour
         float alpha = splatterSpriteRenderer.color.a;
 
         for (float t = 0.0f; t < 1.0f; t += Time.deltaTime / duration)
-        {
+        {   
             Color newColor = new Color(splatterSpriteRenderer.color.r, splatterSpriteRenderer.color.g, splatterSpriteRenderer.color.b, Mathf.Lerp(alpha, 0 , t));
             splatterSpriteRenderer.color = newColor;
             yield return null;
         }
-
         Destroy(splatter);
     }
 

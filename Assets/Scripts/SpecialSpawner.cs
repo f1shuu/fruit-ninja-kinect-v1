@@ -54,6 +54,8 @@ public class SpecialSpawner : MonoBehaviour
 
     private IEnumerator Spawn()
     {   
+        yield return new WaitForSeconds(2f);
+
         while (enabled)
         {
             while (foundGameManager.getSlicedFruitCount() != requiredSlicedFruits && !foundGameManager.getIsFrenzy())
@@ -102,5 +104,6 @@ public class SpecialSpawner : MonoBehaviour
             Random.Range(bounds.min.z, bounds.max.z)
         );
     }
+
 
 }

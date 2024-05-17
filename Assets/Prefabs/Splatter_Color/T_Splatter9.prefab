@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8679551072353741969}
   - component: {fileID: 1679185101409974598}
+  - component: {fileID: 114256810467453268}
   m_Layer: 0
   m_Name: T_Splatter9
   m_TagString: Untagged
@@ -79,3 +80,16 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &114256810467453268
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7657819314742684294}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7da4ff0bb006d334b8135d7f782684dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  splatterLifespan: 2
