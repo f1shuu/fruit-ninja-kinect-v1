@@ -10,9 +10,9 @@ public class Fruit : MonoBehaviour
 
     private Rigidbody fruitRigidbody;
     private Collider fruitCollider;
-    private ParticleSystem juice;
+    protected ParticleSystem juice;
 
-    private List<GameObject> juiceSplatters = new List<GameObject>();
+     private List<GameObject> juiceSplatters = new List<GameObject>();
 
     private MeshFilter outlineMesh;
 
@@ -49,29 +49,20 @@ public class Fruit : MonoBehaviour
                 outlineMesh = childTransform.GetComponentInChildren<MeshFilter>();
             }
         }
-        LoadJuiceSplatters();
+         LoadJuiceSplatters();
     }
 
-    private void Update()
+    public virtual void Update()
     {
         if(!isSliced)
         {
-            if(!CompareTag("Play Button") && !CompareTag("Quit Button"))
-            {
-                transform.Rotate(randomDirection * Time.deltaTime * randomSpeed);
-            }
-            else
-            {
-                transform.Rotate(Vector2.up * Time.deltaTime * 20);
-            }
+            transform.Rotate(randomDirection * Time.deltaTime * randomSpeed);
         }
     }
 
     public virtual void Slice(Vector3 direction = default(Vector3), Vector3 position = default(Vector3), float force = 0f)
     {
         isSliced = true;
-        if (!CompareTag("Play Button") && !CompareTag("Quit Button"))
-        {
         foundGameManager.AddScore(pointsValue);
         if(!foundGameManager.getIsFrenzy())
         {
@@ -84,7 +75,6 @@ public class Fruit : MonoBehaviour
                 ShowComboCount(comboCount);
                 StartCoroutine(AddComboScore(foundGameManager, comboCount, popupPosition));
             }
-        }
 
 
         whole.SetActive(false);
@@ -96,19 +86,14 @@ public class Fruit : MonoBehaviour
 
         fruitCollider.enabled = false;
         juice.Play();
+        
         GameObject splatterPrefab = juiceSplatters[Random.Range(0, juiceSplatters.Count)];
-        float splatterLifespan = splatterPrefab.GetComponent<Splatter>().splatterLifespan;
         Color juiceColor = juice.GetComponent<Renderer>().material.color;
         Vector3 splatterPosition = transform.position;
         splatterPosition.z += 4f;
         GameObject splatter = Instantiate(splatterPrefab, splatterPosition, Quaternion.identity);
-        SpriteRenderer splatterSpriteRenderer = splatter.GetComponent<SpriteRenderer>();
-        splatterSpriteRenderer.color = juiceColor;
-        StartCoroutine(FadeOut(splatterLifespan, splatter, splatterSpriteRenderer));
-        
-
-        // float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        // StartCoroutine(RotateSliced(angle));
+        Splatter splatterScript = splatter.GetComponent<Splatter>();
+        splatterScript.InitializeSplatter(juiceColor, splatterPosition);
 
         Rigidbody[] slices = sliced.GetComponentsInChildren<Rigidbody>();
 
@@ -119,19 +104,8 @@ public class Fruit : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if(CompareTag("Play Button"))
-        {
-            Destroy(GameObject.FindWithTag("Quit Button"));
-            Destroy(GameObject.Find("MainMenuBackground"));
-            FindObjectOfType<GameManager>().NewGame();
-          
-        }
-        if(CompareTag("Quit Button"))
-        {
-            Invoke("Quit", 1f);
-        }        
+    public virtual void OnTriggerEnter(Collider other)
+    {    
         if (other.CompareTag("KinectPlayer")) 
         {
             KinectBlade blade = other.GetComponent<KinectBlade>();
@@ -153,6 +127,24 @@ public class Fruit : MonoBehaviour
         }
     }
 
+    private void LoadJuiceSplatters()
+    {
+        juiceSplatters.Clear();
+
+        string folderPath = "Assets/Prefabs/Splatters";
+
+        string[] splatterGUIDs = UnityEditor.AssetDatabase.FindAssets("t:GameObject", new[] { folderPath });
+        foreach (string splatterGUID in splatterGUIDs)
+        {
+            string splatterPath = UnityEditor.AssetDatabase.GUIDToAssetPath(splatterGUID);
+            GameObject splatter = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(splatterPath);
+            if (splatter != null)
+            {
+                juiceSplatters.Add(splatter);
+            }
+        }
+    }    
+
     private IEnumerator AddComboScore(GameManager foundGameManager, int comboCount, Vector3 popupPosition)
     {
         yield return new WaitForSeconds(0.8f);
@@ -170,46 +162,6 @@ public class Fruit : MonoBehaviour
 
     }
 
-    private IEnumerator FadeOut(float duration, GameObject splatter, SpriteRenderer splatterSpriteRenderer)
-    {
-        float alpha = splatterSpriteRenderer.color.a;
-
-        for (float t = 0.0f; t < 1.0f; t += Time.deltaTime / duration)
-        {   
-            Color newColor = new Color(splatterSpriteRenderer.color.r, splatterSpriteRenderer.color.g, splatterSpriteRenderer.color.b, Mathf.Lerp(alpha, 0 , t));
-            splatterSpriteRenderer.color = newColor;
-            yield return null;
-        }
-        Destroy(splatter);
-    }
-
-        
-
-    private void Quit() {
-        #if UNITY_STANDALONE
-            Application.Quit();
-        #endif
-        #if UNITY_EDITOR
-            UnityEditor.EditorApplication.isPlaying = false;
-        #endif
-}
-
-    private void LoadJuiceSplatters()
-    {
-        juiceSplatters.Clear();
-
-        string folderPath = "Assets/Prefabs/Splatters";
-
-        string[] splatterGUIDs = UnityEditor.AssetDatabase.FindAssets("t:GameObject", new[] { folderPath });
-        foreach (string splatterGUID in splatterGUIDs)
-        {
-            string splatterPath = UnityEditor.AssetDatabase.GUIDToAssetPath(splatterGUID);
-            GameObject splatter = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(splatterPath);
-            if (splatter != null)
-            {
-                juiceSplatters.Add(splatter);
-            }
-        }
-    }
+      
 
 }

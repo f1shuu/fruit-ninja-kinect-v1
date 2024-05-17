@@ -49,11 +49,6 @@ public class GameManager : MonoBehaviour
         doubleScoreColor = doubleScoreText.color;
     }
 
-    private void Start()
-    {
-        //NewGame();
-    }
-
     public void NewGame()
     {
         Time.timeScale = 1f;
@@ -275,7 +270,6 @@ public class GameManager : MonoBehaviour
             if (time <= 0.0f || lives == 0)
             {
                 GameOver();
-                //yield break;
             }
             if(!isTimerPaused)
             {
