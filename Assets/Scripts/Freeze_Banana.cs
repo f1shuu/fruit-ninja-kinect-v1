@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Freeze_Banana : Fruit
 {
-    private float freezeDuration = 4f;
+    private float freezeDuration = 5f;
     private float slowFactor = 0.75f;
 
     public override void Slice(Vector3 direction = default(Vector3), Vector3 position = default(Vector3), float force = 0f)

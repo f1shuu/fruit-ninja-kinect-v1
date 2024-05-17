@@ -152,7 +152,7 @@ public class Fruit : MonoBehaviour
         if(foundGameManager.getComboCount() == comboCount)
         {
             var pop = Instantiate(comboPopup, popupPosition, Quaternion.identity);
-            int points = comboCount;
+            int points = comboCount * 5 + comboCount / 10 * 50;
             var textMesh = pop.GetComponent<TextMesh>();
             textMesh.text = "Combo reward: "+ points;
             textMesh.color = new Color32(255, 255, 255, 255);

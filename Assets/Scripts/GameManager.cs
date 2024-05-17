@@ -14,6 +14,9 @@ public class GameManager : MonoBehaviour
     public Text quitText;
     public Text timerText;
     public Image fadeOutImage;
+    public Image tintImage;
+    public Image iceTextbox;
+    public Image iceFrame;
 
     private Color timerColor;
     private Color freezeColor;
@@ -33,6 +36,7 @@ public class GameManager : MonoBehaviour
     private float comboTimeWindow = 0.8f;
     private float lastSliceTime;
     private bool isFrenzy = false;
+    private float tintAlpha = 0.1f;
 
     public float scoreMultiplier = 1f;
 
@@ -75,11 +79,14 @@ public class GameManager : MonoBehaviour
         doubleScoreText.gameObject.SetActive(false);
         freezeText.gameObject.SetActive(false);
         frenzyText.gameObject.SetActive(false);
+        iceTextbox.gameObject.SetActive(false);
+        iceFrame.gameObject.SetActive(false);
         isTimerPaused = false;
         isFrenzy = false;
         lastSliceTime = Time.time;
         scoreText.color = scoreColor;
         timerText.color = timerColor;
+        tintImage.color = new Color(tintImage.color.r, tintImage.color.g, tintImage.color.b, 0.0f);
         UpdateHighScore();
         StartCoroutine(Timer());
 
@@ -137,6 +144,9 @@ public class GameManager : MonoBehaviour
         freezeText.gameObject.SetActive(true);
         timerText.color = freezeColor;
         Time.timeScale = slowFactor;
+        tintImage.color = new Color(tintImage.color.r, tintImage.color.g, tintImage.color.b, tintAlpha);
+        iceTextbox.gameObject.SetActive(true);
+        iceFrame.gameObject.SetActive(true);
     }
 
     public void ActivateFrenzy(float duration) 
@@ -296,6 +306,9 @@ public class GameManager : MonoBehaviour
         freezeText.gameObject.SetActive(false);
         timerText.color = timerColor;
         Time.timeScale = 1f;
+        tintImage.color = new Color(tintImage.color.r, tintImage.color.g, tintImage.color.b, 0.0f);
+        iceTextbox.gameObject.SetActive(false);
+        iceFrame.gameObject.SetActive(false);
     }
 
     private IEnumerator FinishFrenzy(float duration)
