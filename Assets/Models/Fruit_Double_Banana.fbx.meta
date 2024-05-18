@@ -1,25 +1,22 @@
 fileFormatVersion: 2
-guid: 2d354f05364b16c47a941ea9360cc0a1
+guid: 9c0812644f02e7d4c86fa74328f0995e
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
-    100000: Bottom
-    100002: //RootNode
-    100004: Top
-    400000: Bottom
-    400002: //RootNode
-    400004: Top
-    2100000: red
-    2100002: Yellow
-    2100004: Black
-    2100006: Milky
-    2100008: Whatevercoloristhis
-    2300000: Bottom
-    2300002: Top
-    3300000: Bottom
-    3300002: Top
-    4300000: Bottom
-    4300002: Top
+    100000: //RootNode
+    400000: //RootNode
+    2100000: blue
+    2100002: Yellow.002
+    2100004: whatevercoloristhis.002
+    2100006: blackasfuck.002
+    2100008: Double_Banana_Blue
+    2100010: Double_Banana_Yellow
+    2100012: Double_Banana_Brown
+    2100014: Double_Banana_Black
+    2300000: //RootNode
+    3300000: //RootNode
+    4300000: Banana.001
+    4300002: Double_Banana
   externalObjects: {}
   materials:
     importMaterials: 1

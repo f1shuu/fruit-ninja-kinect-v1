@@ -1,17 +1,40 @@
 fileFormatVersion: 2
-guid: 57c34d171586ac142a16a40d8c592fa4
+guid: 2d354f05364b16c47a941ea9360cc0a1
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
-    100000: //RootNode
-    400000: //RootNode
+    100000: Bottom
+    100002: //RootNode
+    100004: Top
+    100006: Frenzy_Banana_Bottom
+    100008: Frenzy_Banana_Top
+    400000: Bottom
+    400002: //RootNode
+    400004: Top
+    400006: Frenzy_Banana_Bottom
+    400008: Frenzy_Banana_Top
     2100000: red
-    2100002: Yellow.001
-    2100004: whatevercoloristhis.001
-    2100006: blackasfuck.001
-    2300000: //RootNode
-    3300000: //RootNode
-    4300000: Banana
+    2100002: Yellow
+    2100004: Black
+    2100006: Milky
+    2100008: Whatevercoloristhis
+    2100010: Frenzy_Banana_Red
+    2100012: Frenzy_Banana_Yellow
+    2100014: Frenzy_Banana_Black
+    2100016: Frenzy_Banana_Milky
+    2100018: Frenzy_Banana_Brown
+    2300000: Bottom
+    2300002: Top
+    2300004: Frenzy_Banana_Bottom
+    2300006: Frenzy_Banana_Top
+    3300000: Bottom
+    3300002: Top
+    3300004: Frenzy_Banana_Bottom
+    3300006: Frenzy_Banana_Top
+    4300000: Bottom
+    4300002: Top
+    4300004: Frenzy_Banana_Bottom
+    4300006: Frenzy_Banana_Top
   externalObjects: {}
   materials:
     importMaterials: 1

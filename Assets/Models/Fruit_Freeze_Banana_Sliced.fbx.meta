@@ -1,16 +1,36 @@
 fileFormatVersion: 2
-guid: 08582e32f30d3424bad1aead5858d7b9
+guid: afa4b3a7182c9cb4e871d30adafdf93a
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
-    100000: //RootNode
-    400000: //RootNode
+    100000: Bottom
+    100002: //RootNode
+    100004: Top
+    100006: Freeze_Banana_Bottom
+    100008: Freeze_Banana_Top
+    400000: Bottom
+    400002: //RootNode
+    400004: Top
+    400006: Freeze_Banana_Bottom
+    400008: Freeze_Banana_Top
     2100000: darkblue
     2100002: blue
     2100004: lightblue
-    2300000: //RootNode
-    3300000: //RootNode
-    4300000: Banana
+    2100006: Freeze_Banana_Dark_Blue
+    2100008: Freeze_Banana_Blue
+    2100010: Freeze_Banana_Light_Blue
+    2300000: Bottom
+    2300002: Top
+    2300004: Freeze_Banana_Bottom
+    2300006: Freeze_Banana_Top
+    3300000: Bottom
+    3300002: Top
+    3300004: Freeze_Banana_Bottom
+    3300006: Freeze_Banana_Top
+    4300000: Bottom
+    4300002: Top
+    4300004: Freeze_Banana_Bottom
+    4300006: Freeze_Banana_Top
   externalObjects: {}
   materials:
     importMaterials: 1

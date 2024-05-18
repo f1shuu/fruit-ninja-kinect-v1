@@ -1,23 +1,45 @@
 fileFormatVersion: 2
-guid: afa4b3a7182c9cb4e871d30adafdf93a
+guid: 17f4c5147b6334e46b3135f0fb8bd43a
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
     100000: Bottom
     100002: //RootNode
     100004: Top
+    100006: Dobule_Banana_Bottom
+    100008: Double_Banana_Top
+    100010: Double_Banana_Bottom
     400000: Bottom
     400002: //RootNode
     400004: Top
-    2100000: darkblue
-    2100002: blue
-    2100004: lightblue
+    400006: Dobule_Banana_Bottom
+    400008: Double_Banana_Top
+    400010: Double_Banana_Bottom
+    2100000: blue
+    2100002: Yellow
+    2100004: Black
+    2100006: Milky
+    2100008: Whatevercoloristhis
+    2100010: Double_Banana_Blue
+    2100012: Double_Banana_Yellow
+    2100014: Double_Banana_Black
+    2100016: Double_Banana_Milky
+    2100018: Double_Banana_Brown
     2300000: Bottom
     2300002: Top
+    2300004: Dobule_Banana_Bottom
+    2300006: Double_Banana_Top
+    2300008: Double_Banana_Bottom
     3300000: Bottom
     3300002: Top
+    3300004: Dobule_Banana_Bottom
+    3300006: Double_Banana_Top
+    3300008: Double_Banana_Bottom
     4300000: Bottom
     4300002: Top
+    4300004: Dobule_Banana_Bottom
+    4300006: Double_Banana_Top
+    4300008: Double_Banana_Bottom
   externalObjects: {}
   materials:
     importMaterials: 1
