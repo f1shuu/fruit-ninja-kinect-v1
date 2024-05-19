@@ -11,10 +11,16 @@ public class PlayButton : Fruit
 
     public override void OnTriggerEnter(Collider other)
     {
+        int randomBackgroundNumber = Random.Range(1, 6);
         base.OnTriggerEnter(other);
         foundGameManager = FindObjectOfType<GameManager>();
         StartCoroutine(FadeOutMeshRenderer(GameObject.Find("MainMenuBackground"), 0.5f));
         Destroy(GameObject.FindObjectOfType<QuitButton>().gameObject);
+        for (int i = 1; i <= 5; i++) {
+            if (i != randomBackgroundNumber) {
+                Destroy(GameObject.Find("GameBackground" + i.ToString()));
+            }
+        }
         foundGameManager.NewGame();
     }
 
