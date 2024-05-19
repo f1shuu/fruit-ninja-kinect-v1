@@ -70,10 +70,6 @@ public class GameManager : MonoBehaviour
         scoreText.text = "Score: " + score.ToString();
         livesText.text = "Lives: " + lives.ToString();
         timerText.text = "Time: " + time.ToString();
-        scoreText.gameObject.SetActive(true);
-        highScoreText.gameObject.SetActive(true);
-        livesText.gameObject.SetActive(true);
-        timerText.gameObject.SetActive(true);
         playText.gameObject.SetActive(false);
         quitText.gameObject.SetActive(false);
         doubleScoreText.gameObject.SetActive(false);
@@ -88,6 +84,10 @@ public class GameManager : MonoBehaviour
         timerText.color = timerColor;
         tintImage.color = new Color(tintImage.color.r, tintImage.color.g, tintImage.color.b, 0.0f);
         UpdateHighScore();
+        StartCoroutine(FadeIn(scoreText, 1f));
+        StartCoroutine(FadeIn(highScoreText, 1f));
+        StartCoroutine(FadeIn(livesText, 1f));
+        StartCoroutine(FadeIn(timerText, 1f));
         StartCoroutine(Timer());
 
     }
@@ -133,7 +133,7 @@ public class GameManager : MonoBehaviour
     {
         StartCoroutine(ResetMultiplier(duration));
         scoreMultiplier = multiplier;
-        doubleScoreText.gameObject.SetActive(true);
+        StartCoroutine(FadeIn(doubleScoreText, 1f));
         scoreText.color = doubleScoreColor;
     }
 
@@ -141,18 +141,18 @@ public class GameManager : MonoBehaviour
     {
         StartCoroutine(ResumeTimer(duration));
         isTimerPaused = true;
-        freezeText.gameObject.SetActive(true);
+        StartCoroutine(FadeIn(freezeText, 1f));
         timerText.color = freezeColor;
         Time.timeScale = slowFactor;
         tintImage.color = new Color(tintImage.color.r, tintImage.color.g, tintImage.color.b, tintAlpha);
-        iceTextbox.gameObject.SetActive(true);
-        iceFrame.gameObject.SetActive(true);
+        StartCoroutine(FadeIn(iceTextbox, 1f));
+        StartCoroutine(FadeIn(iceFrame, 1f));
     }
 
     public void ActivateFrenzy(float duration) 
     {
         isFrenzy = true;
-        frenzyText.gameObject.SetActive(true);
+        StartCoroutine(FadeIn(frenzyText, 1f));
         StartCoroutine(FinishFrenzy(duration));
     }
 
@@ -295,7 +295,7 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(duration);
         scoreMultiplier = 1f;
-        doubleScoreText.gameObject.SetActive(false);
+        StartCoroutine(FadeOut(doubleScoreText, 1f));
         scoreText.color = scoreColor;
     }
 
@@ -303,19 +303,59 @@ public class GameManager : MonoBehaviour
     {
         yield return new WaitForSeconds(duration);
         isTimerPaused = false;
-        freezeText.gameObject.SetActive(false);
+        StartCoroutine(FadeOut(freezeText, 1f));
         timerText.color = timerColor;
         Time.timeScale = 1f;
         tintImage.color = new Color(tintImage.color.r, tintImage.color.g, tintImage.color.b, 0.0f);
-        iceTextbox.gameObject.SetActive(false);
-        iceFrame.gameObject.SetActive(false);
+        StartCoroutine(FadeOut(iceTextbox, 1f));
+        StartCoroutine(FadeOut(iceFrame, 1f));
     }
 
     private IEnumerator FinishFrenzy(float duration)
     {
         yield return new WaitForSeconds(duration);
-        frenzyText.gameObject.SetActive(false);
+        StartCoroutine(FadeOut(frenzyText, 1f));
         isFrenzy = false;
-    }    
+    }  
 
+    public IEnumerator FadeIn(Graphic graphic, float duration)
+    {
+        graphic.gameObject.SetActive(true);
+        Color originalColor = graphic.color;
+        originalColor.a = 0;
+        graphic.color = originalColor;
+
+        for (float t = 0.01f; t < duration; t += Time.deltaTime)
+        {
+            Color newColor = graphic.color;
+            newColor.a = Mathf.Lerp(0, 1, t / duration);
+            graphic.color = newColor;
+            yield return null;
+        }
+
+        originalColor.a = 1;
+        graphic.color = originalColor;
+    }
+
+    public IEnumerator FadeOut(Graphic graphic, float duration)
+    {
+        Color originalColor = graphic.color;
+
+        for (float t = 0.01f; t < duration; t += Time.deltaTime)
+        {
+            Color newColor = graphic.color;
+            newColor.a = Mathf.Lerp(1, 0, t / duration);
+            graphic.color = newColor;
+            yield return null;
+        }
+
+        originalColor.a = 0;
+        graphic.color = originalColor;
+        graphic.gameObject.SetActive(false);
+    }
+
+    
+      
 }
+
+
