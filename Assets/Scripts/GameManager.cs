@@ -1,9 +1,11 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
+    public GameObject gameBackground;
     public Text scoreText;
     public Text highScoreText;
     public Text doubleScoreText;
@@ -26,6 +28,8 @@ public class GameManager : MonoBehaviour
     private Blade blade;
     private Spawner spawner;
     private SpecialSpawner specialSpawner; 
+
+    private List<Material> gameBackgroundMats = new List<Material>();
 
     private int score;
     private int lives;
@@ -51,6 +55,7 @@ public class GameManager : MonoBehaviour
         freezeColor = freezeText.color;
         scoreColor = scoreText.color;
         doubleScoreColor = doubleScoreText.color;
+        LoadGameBackgroundMats();
     }
 
     public void NewGame()
@@ -60,6 +65,8 @@ public class GameManager : MonoBehaviour
         blade.enabled = true;
         spawner.enabled = true;  
         specialSpawner.enabled = true;
+
+        gameBackground.gameObject.GetComponent<Renderer>().material = gameBackgroundMats[Random.Range(0, gameBackgroundMats.Count)];
 
         comboCount = 1;
         slicedFruitCount = 0;
@@ -83,6 +90,7 @@ public class GameManager : MonoBehaviour
         scoreText.color = scoreColor;
         timerText.color = timerColor;
         tintImage.color = new Color(tintImage.color.r, tintImage.color.g, tintImage.color.b, 0.0f);
+
         UpdateHighScore();
         StartCoroutine(FadeIn(scoreText, 1f));
         StartCoroutine(FadeIn(highScoreText, 1f));
@@ -238,6 +246,24 @@ public class GameManager : MonoBehaviour
         StopAllCoroutines();
         StartCoroutine(GameOverSequence());
     }
+
+    private void LoadGameBackgroundMats()
+    {
+        gameBackgroundMats.Clear();
+
+        string folderPath = "Assets/Materials/Backgrounds";
+
+        string[] matGUIDs = UnityEditor.AssetDatabase.FindAssets("t:Material", new[] { folderPath });
+        foreach (string matGUID in matGUIDs)
+        {
+            string matPath = UnityEditor.AssetDatabase.GUIDToAssetPath(matGUID);
+            Material mat = UnityEditor.AssetDatabase.LoadAssetAtPath<Material>(matPath);
+            if (mat != null)
+            {
+                gameBackgroundMats.Add(mat);
+            }
+        }
+    }  
 
 
     private IEnumerator GameOverSequence()

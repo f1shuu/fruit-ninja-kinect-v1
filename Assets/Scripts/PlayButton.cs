@@ -16,11 +16,6 @@ public class PlayButton : Fruit
         foundGameManager = FindObjectOfType<GameManager>();
         StartCoroutine(FadeOutMeshRenderer(GameObject.Find("MainMenuBackground"), 0.5f));
         Destroy(GameObject.FindObjectOfType<QuitButton>().gameObject);
-        for (int i = 1; i <= 5; i++) {
-            if (i != randomBackgroundNumber) {
-                Destroy(GameObject.Find("GameBackground" + i.ToString()));
-            }
-        }
         foundGameManager.NewGame();
     }
 
