@@ -72,7 +72,7 @@ public class GameManager : MonoBehaviour
         slicedFruitCount = 0;
         score = 0;
         lives = 3;
-        time = 60.0f;
+        time = 6.0f;
         scoreMultiplier = 1f;
         scoreText.text = "Score: " + score.ToString();
         livesText.text = "Lives: " + lives.ToString();
@@ -247,6 +247,11 @@ public class GameManager : MonoBehaviour
         StartCoroutine(GameOverSequence());
     }
 
+    public void TimesUp()
+    {
+        StartCoroutine(PomegranateSequence());
+    }
+
     private void LoadGameBackgroundMats()
     {
         gameBackgroundMats.Clear();
@@ -264,6 +269,17 @@ public class GameManager : MonoBehaviour
             }
         }
     }  
+
+    private IEnumerator PomegranateSequence()
+    {
+        spawner.enabled = false;
+        specialSpawner.enabled = false;
+        yield return new WaitForSeconds(3f);
+        specialSpawner.SpawnPomegranate();
+
+        yield return new WaitForSeconds(5f);
+        GameOver();
+    }
 
 
     private IEnumerator GameOverSequence()
@@ -305,7 +321,8 @@ public class GameManager : MonoBehaviour
         {
             if (time <= 0.0f || lives == 0)
             {
-                GameOver();
+                TimesUp();
+                yield break;
             }
             if(!isTimerPaused)
             {

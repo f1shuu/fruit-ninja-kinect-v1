@@ -11,6 +11,8 @@ public class SpecialSpawner : MonoBehaviour
 
     public GameObject[] fruitPrefabs;
 
+    public GameObject pomegranatePrefab;
+
 
     private enum directionEnum
     {
@@ -22,6 +24,8 @@ public class SpecialSpawner : MonoBehaviour
 
     public float minForce = 18f;
     public float maxForce = 22f;
+
+    public float pomegranateForce = 36f;
 
     public float maxLifeTime = 5f;
 
@@ -51,7 +55,18 @@ public class SpecialSpawner : MonoBehaviour
     {
         StopAllCoroutines();
     }
-
+    public void SpawnPomegranate()
+    {
+        GameObject prefab = pomegranatePrefab;
+        int randomSpawnIndex = Random.Range(0, spawnAreas.Length);
+        Collider spawnArea = spawnAreas[randomSpawnIndex];
+        directionEnum spawnDirection = spawnAreaDirections[randomSpawnIndex];
+        Vector3 position = spawnArea.bounds.center;
+        Quaternion rotation = Quaternion.Euler(0f, 0f, 0f);
+        GameObject fruit = Instantiate(prefab, position, rotation);
+        Destroy(fruit, maxLifeTime);
+        fruit.GetComponent<Rigidbody>().AddForce(((int)spawnDirection == 1 ? 1 : -1) * fruit.transform.right * pomegranateForce, ForceMode.Impulse);
+    }
     private IEnumerator Spawn()
     {   
         yield return new WaitForSeconds(2f);

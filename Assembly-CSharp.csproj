@@ -85,6 +85,7 @@
      <Compile Include="Assets\Scripts\GameManager.cs" />
      <Compile Include="Assets\Scripts\KinectBlade.cs" />
      <Compile Include="Assets\Scripts\PlayButton.cs" />
+     <Compile Include="Assets\Scripts\Pomegranate.cs" />
      <Compile Include="Assets\Scripts\QuitButton.cs" />
      <Compile Include="Assets\Scripts\Spawner.cs" />
      <Compile Include="Assets\Scripts\SpecialSpawner.cs" />

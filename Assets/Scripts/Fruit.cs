@@ -8,11 +8,11 @@ public class Fruit : MonoBehaviour
     public GameObject sliced;
     public GameObject comboPopup;
 
-    private Rigidbody fruitRigidbody;
-    private Collider fruitCollider;
+    protected Rigidbody fruitRigidbody;
+    protected Collider fruitCollider;
     protected ParticleSystem juice;
 
-     private List<GameObject> juiceSplatters = new List<GameObject>();
+    protected List<GameObject> juiceSplatters = new List<GameObject>();
 
     private MeshFilter outlineMesh;
 
@@ -20,7 +20,7 @@ public class Fruit : MonoBehaviour
 
     public int pointsValue = 10;
 
-    private bool isSliced = false;
+    protected bool isSliced = false;
 
     private float randomX;
     private float randomY;
@@ -145,7 +145,7 @@ public class Fruit : MonoBehaviour
         }
     }    
 
-    private IEnumerator AddComboScore(GameManager foundGameManager, int comboCount, Vector3 popupPosition)
+    public IEnumerator AddComboScore(GameManager foundGameManager, int comboCount, Vector3 popupPosition)
     {
         yield return new WaitForSeconds(0.8f);
 
