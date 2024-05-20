@@ -4838,6 +4838,7 @@ MonoBehaviour:
   comboPopup: {fileID: 8788164767786686419, guid: ad5954bc848e88b439b8d636c33be5f9,
     type: 3}
   pointsValue: 0
+  fruitImpactClip: {fileID: 8300000, guid: f70f640ee413da148be0a53185abad5b, type: 3}
 --- !u!54 &7538592121677443992
 Rigidbody:
   m_ObjectHideFlags: 0

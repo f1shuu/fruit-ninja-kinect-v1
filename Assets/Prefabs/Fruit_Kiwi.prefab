@@ -140,6 +140,7 @@ MonoBehaviour:
   comboPopup: {fileID: 8788164767786686419, guid: 8c116dbaeafd07a4b827f675567c2cf7,
     type: 3}
   pointsValue: 25
+  fruitImpactClip: {fileID: 8300000, guid: 469b764bde7fd4e41ba6497661c6ee66, type: 3}
 --- !u!1 &6560547783397572787
 GameObject:
   m_ObjectHideFlags: 0

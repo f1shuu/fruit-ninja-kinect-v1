@@ -17,6 +17,11 @@ public class Bomb : MonoBehaviour
     private Vector2 randomDirection;
     private float randomSpeed;
 
+    private AudioSource audioSource;
+
+    public AudioClip bombFuseClip;
+    public AudioClip bombExplodeClip;
+
     private void Awake()
     {
         explosion = transform.GetChild(0).GetComponentInChildren<ParticleSystem>();
@@ -29,6 +34,12 @@ public class Bomb : MonoBehaviour
         randomDirection = new Vector2(randomX, randomY);
         randomDirection.Normalize();
         randomSpeed = Random.Range(40f, 100f);
+
+        audioSource = GetComponent<AudioSource>();
+        audioSource.clip = bombFuseClip;
+        audioSource.loop = true;
+        audioSource.volume = 0.2f;
+        audioSource.Play();
     }
 
     private void Update()
@@ -42,6 +53,10 @@ public class Bomb : MonoBehaviour
         {
             explosion.Play();
             smoke.Stop();
+            audioSource.clip = bombExplodeClip;
+            audioSource.volume = 1f;
+            audioSource.loop = false;
+            audioSource.Play();
             var foundGameManager = FindObjectOfType<GameManager>();
             foundGameManager.AddScore(pointsValue);
             foundGameManager.ResetCombo();

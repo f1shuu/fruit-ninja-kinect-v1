@@ -13,17 +13,18 @@ public class SpecialSpawner : MonoBehaviour
 
     public GameObject pomegranatePrefab;
 
+    public AudioClip throwFruitSound;
 
     private enum directionEnum
     {
         Right = 1,
         Left = -1
     }
-    public float minAngle = -10f;
-    public float maxAngle = 10f;
+    public float minAngle = -5f;
+    public float maxAngle = 5f;
 
-    public float minForce = 18f;
-    public float maxForce = 22f;
+    public float minForce = 24f;
+    public float maxForce = 28f;
 
     public float pomegranateForce = 36f;
 
@@ -57,6 +58,7 @@ public class SpecialSpawner : MonoBehaviour
     }
     public void SpawnPomegranate()
     {
+        requiredSlicedFruits = -1;
         GameObject prefab = pomegranatePrefab;
         int randomSpawnIndex = Random.Range(0, spawnAreas.Length);
         Collider spawnArea = spawnAreas[randomSpawnIndex];
@@ -66,6 +68,7 @@ public class SpecialSpawner : MonoBehaviour
         GameObject fruit = Instantiate(prefab, position, rotation);
         Destroy(fruit, maxLifeTime);
         fruit.GetComponent<Rigidbody>().AddForce(((int)spawnDirection == 1 ? 1 : -1) * fruit.transform.right * pomegranateForce, ForceMode.Impulse);
+        foundGameManager.audioSource.PlayOneShot(throwFruitSound);
     }
     private IEnumerator Spawn()
     {   
@@ -100,6 +103,7 @@ public class SpecialSpawner : MonoBehaviour
 
             float force = Random.Range(minForce, maxForce);
             fruit.GetComponent<Rigidbody>().AddForce(((int)spawnDirection == 1 ? 1 : -1) * fruit.transform.right * force, ForceMode.Impulse);
+            foundGameManager.audioSource.PlayOneShot(throwFruitSound);
 
             if(!foundGameManager.getIsFrenzy())
             {

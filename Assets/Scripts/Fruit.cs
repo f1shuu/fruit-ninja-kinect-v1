@@ -28,6 +28,7 @@ public class Fruit : MonoBehaviour
     private float randomSpeed;
 
     protected GameManager foundGameManager;
+    public AudioClip fruitImpactClip;
 
 
     public virtual void Awake()
@@ -62,6 +63,7 @@ public class Fruit : MonoBehaviour
 
     public virtual void Slice(Vector3 direction = default(Vector3), Vector3 position = default(Vector3), float force = 0f)
     {
+        foundGameManager.audioSource.PlayOneShot(foundGameManager.fruitSliceClips[Random.Range(0, foundGameManager.fruitSliceClips.Length)]);
         isSliced = true;
         foundGameManager.AddScore(pointsValue);
         if(!foundGameManager.getIsFrenzy())
@@ -86,7 +88,9 @@ public class Fruit : MonoBehaviour
 
         fruitCollider.enabled = false;
         juice.Play();
-        
+        foundGameManager.audioSource.PlayOneShot(fruitImpactClip);
+
+
         GameObject splatterPrefab = juiceSplatters[Random.Range(0, juiceSplatters.Count)];
         Color juiceColor = juice.GetComponent<Renderer>().material.color;
         Vector3 splatterPosition = transform.position;
@@ -94,6 +98,8 @@ public class Fruit : MonoBehaviour
         GameObject splatter = Instantiate(splatterPrefab, splatterPosition, Quaternion.identity);
         Splatter splatterScript = splatter.GetComponent<Splatter>();
         splatterScript.InitializeSplatter(juiceColor, splatterPosition);
+
+        foundGameManager.audioSource.PlayOneShot(foundGameManager.splatterClips[Random.Range(0, foundGameManager.splatterClips.Length)]);
 
         Rigidbody[] slices = sliced.GetComponentsInChildren<Rigidbody>();
 
@@ -124,6 +130,7 @@ public class Fruit : MonoBehaviour
         {
             var pop = Instantiate(comboPopup, transform.position, Quaternion.identity);
             pop.GetComponent<TextMesh>().text = "Combo x " + comboCount;
+            foundGameManager.audioSource.PlayOneShot(foundGameManager.sliceComboClips[comboCount % foundGameManager.sliceComboClips.Length], 0.6f);
         }
     }
 
@@ -147,7 +154,7 @@ public class Fruit : MonoBehaviour
 
     public IEnumerator AddComboScore(GameManager foundGameManager, int comboCount, Vector3 popupPosition)
     {
-        yield return new WaitForSeconds(0.8f);
+        yield return new WaitForSeconds(foundGameManager.comboTimeWindow - 0.01f);
 
         if(foundGameManager.getComboCount() == comboCount)
         {
@@ -158,6 +165,7 @@ public class Fruit : MonoBehaviour
             textMesh.color = new Color32(255, 255, 255, 255);
             textMesh.fontStyle = FontStyle.Italic;
             foundGameManager.AddScore(points);
+            foundGameManager.audioSource.PlayOneShot(foundGameManager.comboRewardClip, 0.6f);
         }
 
     }

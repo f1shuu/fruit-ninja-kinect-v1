@@ -4,7 +4,6 @@ using System.Collections;
 public class Pomegranate : Fruit
 {
     private int sliceCount = 0;
-    private bool isSlicing = false;
     public float slowDownFactor = 0.5f;
     public float sliceDuration = 3f;
     public float explosionForceMultiplier = 4f;
@@ -12,6 +11,8 @@ public class Pomegranate : Fruit
     private Rigidbody pomegranateRigidbody;
 
     private GameObject sliceCountPopup;
+
+    public AudioClip pomeBurst;
 
     public override void Awake()
     {
@@ -22,20 +23,22 @@ public class Pomegranate : Fruit
 
     public override void Slice(Vector3 direction = default(Vector3), Vector3 position = default(Vector3), float force = 0f)
     {
+        foundGameManager.audioSource.PlayOneShot(foundGameManager.fruitSliceClips[Random.Range(0, foundGameManager.fruitSliceClips.Length)]);
         sliceCount++;
         ShowSliceCount();
         pomegranateRigidbody.velocity = Vector3.zero;
         pomegranateRigidbody.angularVelocity = Vector3.zero;
 
-        if (!isSlicing)
+        if (!foundGameManager.isPomegranateSliced)
         {
+            foundGameManager.audioSource.PlayOneShot(fruitImpactClip);
             StartCoroutine(SlicePomegranate());
         }
     }
 
     private IEnumerator SlicePomegranate()
     {
-        isSlicing = true;
+        foundGameManager.isPomegranateSliced = true;
 
         yield return StartCoroutine(ChangeTimeScale(Time.timeScale, slowDownFactor, 1f));
         
@@ -61,6 +64,7 @@ public class Pomegranate : Fruit
 
     private void Explode()
     {
+        foundGameManager.audioSource.PlayOneShot(pomeBurst);
         isSliced = true;
         whole.SetActive(false);
         sliced.SetActive(true);
@@ -113,5 +117,6 @@ public class Pomegranate : Fruit
             textMesh.text = "+ "+ points;
             textMesh.fontStyle = FontStyle.Italic;
             foundGameManager.AddScore(points);
+            foundGameManager.audioSource.PlayOneShot(foundGameManager.comboRewardClip, 0.6f);
     }
 }

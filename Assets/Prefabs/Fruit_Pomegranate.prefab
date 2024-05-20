@@ -4838,10 +4838,12 @@ MonoBehaviour:
   comboPopup: {fileID: 8788164767786686419, guid: 3cd382465ac25e143baf6ac8d2b806ca,
     type: 3}
   pointsValue: 0
+  fruitImpactClip: {fileID: 8300000, guid: f70f640ee413da148be0a53185abad5b, type: 3}
   slowDownFactor: 0.5
   sliceDuration: 3
   explosionForceMultiplier: 4
   explosionRadius: 4
+  pomeBurst: {fileID: 8300000, guid: 21f3c54aa8d44c945a06e21b031e005a, type: 3}
 --- !u!54 &7032903993439267309
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -4865,7 +4867,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 550937965380110720}
-  m_Material: {fileID: 13400000, guid: 861657452dfe2ac48a98dc0db3803b1c, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -4894,7 +4896,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 550937965380110722}
-  m_Material: {fileID: 13400000, guid: 861657452dfe2ac48a98dc0db3803b1c, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -4923,7 +4925,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 550937965380110726}
-  m_Material: {fileID: 13400000, guid: 861657452dfe2ac48a98dc0db3803b1c, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -4952,7 +4954,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 550937965380110732}
-  m_Material: {fileID: 13400000, guid: 861657452dfe2ac48a98dc0db3803b1c, type: 2}
+  m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2

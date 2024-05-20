@@ -20,6 +20,19 @@ public class GameManager : MonoBehaviour
     public Image iceTextbox;
     public Image iceFrame;
 
+    public AudioClip mainMenuMusic;
+    public AudioClip gameStartClip;
+    public AudioClip gameOverClip;
+    public AudioClip timesUpClip;
+    public AudioClip comboRewardClip;
+    public AudioClip[] gameBackgroundMusic;
+    public AudioClip[] fruitSliceClips;
+    public AudioClip[] sliceComboClips;
+    public AudioClip[] splatterClips;
+
+    [HideInInspector]
+    public AudioSource audioSource;
+
     private Color timerColor;
     private Color freezeColor;
     private Color scoreColor;
@@ -37,12 +50,15 @@ public class GameManager : MonoBehaviour
     private bool isTimerPaused = false;
     private int comboCount;
     private int slicedFruitCount;
-    private float comboTimeWindow = 0.8f;
+    [HideInInspector]
+    public float comboTimeWindow = 0.8f;
     private float lastSliceTime;
     private bool isFrenzy = false;
     private float tintAlpha = 0.1f;
+    private float scoreMultiplier = 1f;
+    public bool isPomegranateSliced {get; set;}
 
-    public float scoreMultiplier = 1f;
+
 
     private void Awake()
     {
@@ -56,6 +72,14 @@ public class GameManager : MonoBehaviour
         scoreColor = scoreText.color;
         doubleScoreColor = doubleScoreText.color;
         LoadGameBackgroundMats();
+
+        audioSource = GetComponent<AudioSource>();
+
+        if (mainMenuMusic != null && audioSource != null)
+        {
+            audioSource.clip = mainMenuMusic;
+            audioSource.Play();
+        }        
     }
 
     public void NewGame()
@@ -72,7 +96,7 @@ public class GameManager : MonoBehaviour
         slicedFruitCount = 0;
         score = 0;
         lives = 3;
-        time = 6.0f;
+        time = 60.0f;
         scoreMultiplier = 1f;
         scoreText.text = "Score: " + score.ToString();
         livesText.text = "Lives: " + lives.ToString();
@@ -86,6 +110,7 @@ public class GameManager : MonoBehaviour
         iceFrame.gameObject.SetActive(false);
         isTimerPaused = false;
         isFrenzy = false;
+        isPomegranateSliced = false;
         lastSliceTime = Time.time;
         scoreText.color = scoreColor;
         timerText.color = timerColor;
@@ -97,6 +122,13 @@ public class GameManager : MonoBehaviour
         StartCoroutine(FadeIn(livesText, 1f));
         StartCoroutine(FadeIn(timerText, 1f));
         StartCoroutine(Timer());
+
+        if (gameBackgroundMusic.Length > 0 && audioSource != null)
+        {
+            audioSource.clip = gameBackgroundMusic[Random.Range(0, gameBackgroundMusic.Length)];
+            audioSource.Play();
+            audioSource.PlayOneShot(gameStartClip);
+        }        
 
     }
 
@@ -245,10 +277,12 @@ public class GameManager : MonoBehaviour
         specialSpawner.enabled = false;
         StopAllCoroutines();
         StartCoroutine(GameOverSequence());
+        audioSource.PlayOneShot(gameOverClip);
     }
 
     public void TimesUp()
     {
+        audioSource.PlayOneShot(timesUpClip);
         StartCoroutine(PomegranateSequence());
     }
 
@@ -273,11 +307,13 @@ public class GameManager : MonoBehaviour
     private IEnumerator PomegranateSequence()
     {
         spawner.enabled = false;
-        specialSpawner.enabled = false;
         yield return new WaitForSeconds(3f);
         specialSpawner.SpawnPomegranate();
-
-        yield return new WaitForSeconds(5f);
+        yield return new WaitForSeconds(2f);
+        if(isPomegranateSliced)
+        {
+            yield return new WaitForSeconds(3f);
+        }
         GameOver();
     }
 
@@ -285,7 +321,7 @@ public class GameManager : MonoBehaviour
     private IEnumerator GameOverSequence()
     {
         float elapsed = 0f;
-        float duration = 0.6f;
+        float duration = 2f;
 
         while (elapsed < duration)
         {
@@ -319,12 +355,17 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         while (true)
         {
-            if (time <= 0.0f || lives == 0)
+            if (time <= 0.0f)
             {
                 TimesUp();
                 yield break;
             }
-            if(!isTimerPaused)
+            else if (lives == 0)
+            {
+                GameOver();
+                yield break;
+            }
+            else if(!isTimerPaused)
             {
                 time -= Time.deltaTime;
             }
@@ -400,5 +441,3 @@ public class GameManager : MonoBehaviour
     
       
 }
-
-

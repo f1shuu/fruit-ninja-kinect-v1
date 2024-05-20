@@ -21,11 +21,19 @@ public class Spawner : MonoBehaviour
     public float minForce = 18f;
     public float maxForce = 22f;
 
-    public float maxLifeTime = 10f;
+    private float maxLifeTime;
+    public float maxFruitLifeTime = 10f;
+    public float maxBombLifeTime = 5f;
+
+    private AudioSource audioSource;
+
+    public AudioClip throwFruitSound;
+    public AudioClip throwBombSound;
 
     private void Awake()
     {
         spawnArea = GetComponent<Collider>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     private void OnEnable()
@@ -44,11 +52,15 @@ public class Spawner : MonoBehaviour
 
         while (enabled)
         {
+            AudioClip clip = throwFruitSound;
             GameObject prefab = fruitPrefabs[Random.Range(0, fruitPrefabs.Length)];
+            maxLifeTime = maxFruitLifeTime;
 
             if (Random.value < bombChance)
             {
                 prefab = bombPrefab;
+                clip = throwBombSound;
+                maxLifeTime = maxBombLifeTime;
             }
 
             Vector3 position = new Vector3();
@@ -62,6 +74,7 @@ public class Spawner : MonoBehaviour
 
             float force = Random.Range(minForce, maxForce);
             fruit.GetComponent<Rigidbody>().AddForce(fruit.transform.up * force, ForceMode.Impulse);
+            audioSource.PlayOneShot(clip, 1f);
 
             yield return new WaitForSeconds(Random.Range(minSpawnDelay, maxSpawnDelay));
         }
