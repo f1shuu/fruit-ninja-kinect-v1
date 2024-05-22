@@ -473,6 +473,9 @@ MonoBehaviour:
   - {fileID: 455667125017893398, guid: 2b053303559ae714f984efaca0501e7f, type: 3}
   - {fileID: 455667125017893398, guid: b4e9938c87b7d07459e04080480bf472, type: 3}
   - {fileID: 455667125017893398, guid: 2f872bc93d9e7c341a491ab6f46645df, type: 3}
+  - {fileID: 4856601652244212735, guid: 46ccded67f79d61488ebbf53f5806961, type: 3}
+  - {fileID: 4856601652244212735, guid: 3dd4561809760f34bbb6ff6dd0069f07, type: 3}
+  - {fileID: 4856601652244212735, guid: c72e5e42eae0830418c6386343e75bb2, type: 3}
   bombPrefab: {fileID: 8784961862331081433, guid: 51daa2417bbab1d4788dc2cf2d4cc128,
     type: 3}
   bombChance: 0.15
@@ -3042,6 +3045,9 @@ MonoBehaviour:
   - {fileID: 455667125017893398, guid: 2b053303559ae714f984efaca0501e7f, type: 3}
   - {fileID: 455667125017893398, guid: b4e9938c87b7d07459e04080480bf472, type: 3}
   - {fileID: 455667125017893398, guid: 2f872bc93d9e7c341a491ab6f46645df, type: 3}
+  - {fileID: 4856601652244212735, guid: 46ccded67f79d61488ebbf53f5806961, type: 3}
+  - {fileID: 4856601652244212735, guid: c72e5e42eae0830418c6386343e75bb2, type: 3}
+  - {fileID: 4856601652244212735, guid: 3dd4561809760f34bbb6ff6dd0069f07, type: 3}
   pomegranatePrefab: {fileID: 455667125017893398, guid: 5f3bcc99cf26cb74595369d8bbdc78da,
     type: 3}
   throwFruitSound: {fileID: 8300000, guid: d0c9883e871ec744a8c960799124d10c, type: 3}
