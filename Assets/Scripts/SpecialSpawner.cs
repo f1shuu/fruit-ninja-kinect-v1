@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
 public class SpecialSpawner : MonoBehaviour
 {
@@ -32,6 +33,8 @@ public class SpecialSpawner : MonoBehaviour
 
     public int requiredSlicedFruits = 20;
 
+    public bool shouldSpawnSpecialFruits {get; set;}
+
     private int requiredSlicedFruitsStep;
 
     private GameManager foundGameManager;
@@ -50,6 +53,7 @@ public class SpecialSpawner : MonoBehaviour
     {
         requiredSlicedFruits = requiredSlicedFruitsStep;
         StartCoroutine(Spawn());
+        shouldSpawnSpecialFruits = true;
     }
 
     private void OnDisable()
@@ -60,7 +64,7 @@ public class SpecialSpawner : MonoBehaviour
     {
         requiredSlicedFruits = -1;
         GameObject prefab = pomegranatePrefab;
-        int randomSpawnIndex = Random.Range(0, spawnAreas.Length);
+        int randomSpawnIndex = UnityEngine.Random.Range(0, spawnAreas.Length);
         Collider spawnArea = spawnAreas[randomSpawnIndex];
         directionEnum spawnDirection = spawnAreaDirections[randomSpawnIndex];
         Vector3 position = spawnArea.bounds.center;
@@ -81,29 +85,25 @@ public class SpecialSpawner : MonoBehaviour
                 yield return null;
             }         
             
-            GameObject prefab;
-            if(foundGameManager.getIsFrenzy())
-            {
-                prefab = fruitPrefabs[Random.Range(0, fruitPrefabs.Length)];
-            }
-            else
-            {
-                prefab = specialFruitPrefabs[Random.Range(0, specialFruitPrefabs.Length)];
-            }
+            GameObject[] prefabs = foundGameManager.getIsFrenzy() ? fruitPrefabs : specialFruitPrefabs;
+            GameObject prefab = prefabs[UnityEngine.Random.Range(0, prefabs.Length)];
 
-            int randomSpawnIndex = Random.Range(0, spawnAreas.Length);
+            if(shouldSpawnSpecialFruits && Array.Exists(specialFruitPrefabs, element => element == prefab) || Array.Exists(fruitPrefabs, element => element == prefab))
+            {
+            int randomSpawnIndex = UnityEngine.Random.Range(0, spawnAreas.Length);
             Collider spawnArea = spawnAreas[randomSpawnIndex];
             directionEnum spawnDirection = spawnAreaDirections[randomSpawnIndex];
 
             Vector3 position = GetRandomPositionInBounds(spawnArea.bounds);
             
-            Quaternion rotation = Quaternion.Euler(0f, 0f, Random.Range(minAngle, maxAngle));
+            Quaternion rotation = Quaternion.Euler(0f, 0f, UnityEngine.Random.Range(minAngle, maxAngle));
             GameObject fruit = Instantiate(prefab, position, rotation);
             Destroy(fruit, maxLifeTime);
 
-            float force = Random.Range(minForce, maxForce);
+            float force = UnityEngine.Random.Range(minForce, maxForce);
             fruit.GetComponent<Rigidbody>().AddForce(((int)spawnDirection == 1 ? 1 : -1) * fruit.transform.right * force, ForceMode.Impulse);
             foundGameManager.audioSource.PlayOneShot(throwFruitSound);
+            }
 
             if(!foundGameManager.getIsFrenzy())
             {
@@ -118,9 +118,9 @@ public class SpecialSpawner : MonoBehaviour
     private Vector3 GetRandomPositionInBounds(Bounds bounds)
     {
         return new Vector3(
-            Random.Range(bounds.min.x, bounds.max.x),
-            Random.Range(bounds.min.y, bounds.max.y),
-            Random.Range(bounds.min.z, bounds.max.z)
+            UnityEngine.Random.Range(bounds.min.x, bounds.max.x),
+            UnityEngine.Random.Range(bounds.min.y, bounds.max.y),
+            UnityEngine.Random.Range(bounds.min.z, bounds.max.z)
         );
     }
 

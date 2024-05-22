@@ -14,8 +14,6 @@ public class GameManager : MonoBehaviour
     public Text freezeText;
     public Text frenzyText;
     public Text livesText;
-    public Text playText;
-    public Text quitText;
     public Text timerText;
     public Image fadeOutImage;
     public Image tintImage;
@@ -103,8 +101,6 @@ public class GameManager : MonoBehaviour
         scoreText.text = "Score: " + score.ToString();
         livesText.text = "Lives: " + lives.ToString();
         timerText.text = "Time: " + time.ToString();
-        playText.gameObject.SetActive(false);
-        quitText.gameObject.SetActive(false);
         doubleScoreText.gameObject.SetActive(false);
         freezeText.gameObject.SetActive(false);
         frenzyText.gameObject.SetActive(false);
@@ -374,6 +370,7 @@ public class GameManager : MonoBehaviour
             if (time <= 5f && spawner.shouldSpawnBombs)
             {
                 spawner.shouldSpawnBombs = false;
+                specialSpawner.shouldSpawnSpecialFruits = false;
             }
             timerText.text = "Time: " + time.ToString("F0");
             yield return null;

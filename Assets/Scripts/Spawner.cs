@@ -36,12 +36,12 @@ public class Spawner : MonoBehaviour
     {
         spawnArea = GetComponent<Collider>();
         audioSource = GetComponent<AudioSource>();
-        shouldSpawnBombs = true;
     }
 
     private void OnEnable()
     {
         StartCoroutine(Spawn());
+        shouldSpawnBombs = true;
     }
 
     private void OnDisable()
