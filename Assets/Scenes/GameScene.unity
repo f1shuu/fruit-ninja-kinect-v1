@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 170076734}
-  m_IndirectSpecularColor: {r: 0.43632814, g: 0.47471273, b: 0.5147158, a: 1}
+  m_IndirectSpecularColor: {r: 0.43632793, g: 0.4747123, b: 0.51471514, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -471,6 +471,8 @@ MonoBehaviour:
   - {fileID: 4856601652244212735, guid: 61ff0496e30f00940a525fb44ad4fb37, type: 3}
   - {fileID: 455667125017893398, guid: 4ad34b4adf144974eb1bd640f0d41a2b, type: 3}
   - {fileID: 455667125017893398, guid: 2b053303559ae714f984efaca0501e7f, type: 3}
+  - {fileID: 455667125017893398, guid: b4e9938c87b7d07459e04080480bf472, type: 3}
+  - {fileID: 455667125017893398, guid: 2f872bc93d9e7c341a491ab6f46645df, type: 3}
   bombPrefab: {fileID: 8784961862331081433, guid: 51daa2417bbab1d4788dc2cf2d4cc128,
     type: 3}
   bombChance: 0.15
@@ -914,6 +916,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameBackground: {fileID: 1251992431}
+  startPopup: {fileID: 8788164767786686419, guid: 4ae148ab9cd56e54face6a807664a1ce,
+    type: 3}
   scoreText: {fileID: 247783257}
   highScoreText: {fileID: 1118686760}
   doubleScoreText: {fileID: 331512694}
@@ -3036,6 +3040,8 @@ MonoBehaviour:
   - {fileID: 455667125017893398, guid: ca5d3933bdda93f4bb95dfaac4f555b2, type: 3}
   - {fileID: 455667125017893398, guid: 4ad34b4adf144974eb1bd640f0d41a2b, type: 3}
   - {fileID: 455667125017893398, guid: 2b053303559ae714f984efaca0501e7f, type: 3}
+  - {fileID: 455667125017893398, guid: b4e9938c87b7d07459e04080480bf472, type: 3}
+  - {fileID: 455667125017893398, guid: 2f872bc93d9e7c341a491ab6f46645df, type: 3}
   pomegranatePrefab: {fileID: 455667125017893398, guid: 5f3bcc99cf26cb74595369d8bbdc78da,
     type: 3}
   throwFruitSound: {fileID: 8300000, guid: d0c9883e871ec744a8c960799124d10c, type: 3}

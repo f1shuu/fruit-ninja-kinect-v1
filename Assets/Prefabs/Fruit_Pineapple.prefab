@@ -4835,9 +4835,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   whole: {fileID: 8311011409392395344}
   sliced: {fileID: 1926259750902404125}
-  comboPopup: {fileID: 8788164767786686419, guid: d41fc17342289c046ab949e1c3d46df3,
+  comboPopup: {fileID: 8788164767786686419, guid: c2ce05cec6881f847af9390399b21e11,
     type: 3}
-  pointsValue: 10
+  pointsValue: 15
   fruitImpactClip: {fileID: 8300000, guid: 2e7f8b8bd92ca5a488d700e166dc11ce, type: 3}
 --- !u!54 &3554012910860509707
 Rigidbody:

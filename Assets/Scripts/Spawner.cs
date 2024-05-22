@@ -25,6 +25,8 @@ public class Spawner : MonoBehaviour
     public float maxFruitLifeTime = 10f;
     public float maxBombLifeTime = 5f;
 
+    public bool shouldSpawnBombs {get; set;}
+
     private AudioSource audioSource;
 
     public AudioClip throwFruitSound;
@@ -34,6 +36,7 @@ public class Spawner : MonoBehaviour
     {
         spawnArea = GetComponent<Collider>();
         audioSource = GetComponent<AudioSource>();
+        shouldSpawnBombs = true;
     }
 
     private void OnEnable()
@@ -48,7 +51,7 @@ public class Spawner : MonoBehaviour
 
     private IEnumerator Spawn()
     {
-        yield return new WaitForSeconds(2f);
+        yield return new WaitForSeconds(5f);
 
         while (enabled)
         {
@@ -56,7 +59,7 @@ public class Spawner : MonoBehaviour
             GameObject prefab = fruitPrefabs[Random.Range(0, fruitPrefabs.Length)];
             maxLifeTime = maxFruitLifeTime;
 
-            if (Random.value < bombChance)
+            if (Random.value < bombChance && shouldSpawnBombs)
             {
                 prefab = bombPrefab;
                 clip = throwBombSound;

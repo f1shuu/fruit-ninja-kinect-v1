@@ -137,7 +137,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   whole: {fileID: 6496522527425045087}
   sliced: {fileID: 3278878705780075492}
-  comboPopup: {fileID: 8788164767786686419, guid: 8c116dbaeafd07a4b827f675567c2cf7,
+  comboPopup: {fileID: 8788164767786686419, guid: c2ce05cec6881f847af9390399b21e11,
     type: 3}
   pointsValue: 25
   fruitImpactClip: {fileID: 8300000, guid: 469b764bde7fd4e41ba6497661c6ee66, type: 3}

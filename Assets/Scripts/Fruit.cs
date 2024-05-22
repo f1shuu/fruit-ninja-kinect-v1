@@ -1,13 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 
 public class Fruit : MonoBehaviour
 {
     public GameObject whole;
     public GameObject sliced;
     public GameObject comboPopup;
-
     protected Rigidbody fruitRigidbody;
     protected Collider fruitCollider;
     protected ParticleSystem juice;
@@ -129,7 +129,7 @@ public class Fruit : MonoBehaviour
         if(comboPopup)
         {
             var pop = Instantiate(comboPopup, transform.position, Quaternion.identity);
-            pop.GetComponent<TextMesh>().text = "Combo x " + comboCount;
+            pop.GetComponent<TextMeshPro>().text = "Combo x " + comboCount;
             foundGameManager.audioSource.PlayOneShot(foundGameManager.sliceComboClips[comboCount % foundGameManager.sliceComboClips.Length], 0.6f);
         }
     }
@@ -160,10 +160,8 @@ public class Fruit : MonoBehaviour
         {
             var pop = Instantiate(comboPopup, popupPosition, Quaternion.identity);
             int points = comboCount * 5 + comboCount / 10 * 50;
-            var textMesh = pop.GetComponent<TextMesh>();
+            var textMesh = pop.GetComponent<TextMeshPro>();
             textMesh.text = "+ "+ points;
-            textMesh.color = new Color32(255, 255, 255, 255);
-            textMesh.fontStyle = FontStyle.Italic;
             foundGameManager.AddScore(points);
             foundGameManager.audioSource.PlayOneShot(foundGameManager.comboRewardClip, 0.6f);
         }

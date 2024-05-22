@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using TMPro;
 
 public class Pomegranate : Fruit
 {
@@ -100,11 +101,10 @@ public class Pomegranate : Fruit
         if (comboPopup)
         {
             sliceCountPopup = Instantiate(comboPopup, transform.position + Vector3.up * 3f, Quaternion.identity);
-            var textMesh = sliceCountPopup.GetComponent<TextMesh>();
+            var textMesh = sliceCountPopup.GetComponent<TextMeshPro>();
             if (textMesh)
             {
                 textMesh.text = sliceCount + " Hits";
-                textMesh.fontStyle = FontStyle.Bold;
             }
         }
     }
@@ -113,9 +113,8 @@ public class Pomegranate : Fruit
     {
             var pop = Instantiate(comboPopup, transform.position + Vector3.up * 1f, Quaternion.identity);
             int points = sliceCount * 5 + sliceCount / 10 * 50;
-            var textMesh = pop.GetComponent<TextMesh>();
+            var textMesh = pop.GetComponent<TextMeshPro>();
             textMesh.text = "+ "+ points;
-            textMesh.fontStyle = FontStyle.Italic;
             foundGameManager.AddScore(points);
             foundGameManager.audioSource.PlayOneShot(foundGameManager.comboRewardClip, 0.6f);
     }

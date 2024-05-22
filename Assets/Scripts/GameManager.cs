@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
     public GameObject gameBackground;
+    public GameObject startPopup;
     public Text scoreText;
     public Text highScoreText;
     public Text doubleScoreText;
@@ -122,12 +124,12 @@ public class GameManager : MonoBehaviour
         StartCoroutine(FadeIn(livesText, 1f));
         StartCoroutine(FadeIn(timerText, 1f));
         StartCoroutine(Timer());
+        StartCoroutine(showStartPopup());
 
         if (gameBackgroundMusic.Length > 0 && audioSource != null)
         {
             audioSource.clip = gameBackgroundMusic[Random.Range(0, gameBackgroundMusic.Length)];
             audioSource.Play();
-            audioSource.PlayOneShot(gameStartClip);
         }        
 
     }
@@ -352,7 +354,7 @@ public class GameManager : MonoBehaviour
 
     private IEnumerator Timer()
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(5f);
         while (true)
         {
             if (time <= 0.0f)
@@ -360,14 +362,18 @@ public class GameManager : MonoBehaviour
                 TimesUp();
                 yield break;
             }
-            else if (lives == 0)
+            if (lives <= 0)
             {
                 GameOver();
                 yield break;
             }
-            else if(!isTimerPaused)
+            if(!isTimerPaused)
             {
                 time -= Time.deltaTime;
+            }
+            if (time <= 5f && spawner.shouldSpawnBombs)
+            {
+                spawner.shouldSpawnBombs = false;
             }
             timerText.text = "Time: " + time.ToString("F0");
             yield return null;
@@ -401,6 +407,24 @@ public class GameManager : MonoBehaviour
         StartCoroutine(FadeOut(frenzyText, 1f));
         isFrenzy = false;
     }  
+
+    private IEnumerator showStartPopup ()
+    {
+        Vector2 popupPosition = Camera.main.ViewportToWorldPoint(new Vector2(0.5f, 0.5f));
+
+        yield return new WaitForSeconds(1f);
+
+        var pop1 = Instantiate(startPopup, popupPosition, Quaternion.identity);
+        var textMesh1 = pop1.GetComponent<TextMeshPro>();
+        textMesh1.text = "60 seconds";
+
+        yield return new WaitForSeconds(2f);
+
+        var pop2 = Instantiate(startPopup, popupPosition, Quaternion.identity);
+        var textMesh2 = pop2.GetComponent<TextMeshPro>();
+        textMesh2.text = "Go!";
+        audioSource.PlayOneShot(gameStartClip);
+    }
 
     public IEnumerator FadeIn(Graphic graphic, float duration)
     {
