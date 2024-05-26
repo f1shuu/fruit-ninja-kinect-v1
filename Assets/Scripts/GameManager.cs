@@ -8,6 +8,8 @@ public class GameManager : MonoBehaviour
 {
     public GameObject gameBackground;
     public GameObject startPopup;
+    public GameObject pauseButton;
+    public GameObject continueButton;
     public Text scoreText;
     public Text highScoreText;
     public Text doubleScoreText;
@@ -19,6 +21,8 @@ public class GameManager : MonoBehaviour
     public Image tintImage;
     public Image iceTextbox;
     public Image iceFrame;
+    public Image pauseMenu;
+    public Image pauseIcon;
 
     public AudioClip mainMenuMusic;
     public AudioClip gameStartClip;
@@ -57,7 +61,9 @@ public class GameManager : MonoBehaviour
     private float tintAlpha = 0.1f;
     private float scoreMultiplier = 1f;
     public bool isPomegranateSliced {get; set;}
-
+    private Vector3 pauseButtonPosition;
+    private Vector3 continueButtonPosition;
+    private float currentTimeScale;
 
 
     private void Awake()
@@ -71,6 +77,10 @@ public class GameManager : MonoBehaviour
         freezeColor = freezeText.color;
         scoreColor = scoreText.color;
         doubleScoreColor = doubleScoreText.color;
+        pauseButtonPosition =  Camera.main.ScreenToWorldPoint(new Vector3(100, 100, Camera.main.nearClipPlane));
+        pauseButtonPosition.z = 0;
+        continueButtonPosition = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width / 2f + 100, Screen.height / 2f, 0f));
+        continueButtonPosition.z = -5;
         LoadGameBackgroundMats();
 
         audioSource = GetComponent<AudioSource>();
@@ -79,7 +89,7 @@ public class GameManager : MonoBehaviour
         {
             audioSource.clip = mainMenuMusic;
             audioSource.Play();
-        }        
+        }     
     }
 
     public void NewGame()
@@ -106,6 +116,8 @@ public class GameManager : MonoBehaviour
         frenzyText.gameObject.SetActive(false);
         iceTextbox.gameObject.SetActive(false);
         iceFrame.gameObject.SetActive(false);
+        pauseMenu.gameObject.SetActive(false);
+        pauseIcon.gameObject.SetActive(false);
         isTimerPaused = false;
         isFrenzy = false;
         isPomegranateSliced = false;
@@ -113,6 +125,8 @@ public class GameManager : MonoBehaviour
         scoreText.color = scoreColor;
         timerText.color = timerColor;
         tintImage.color = new Color(tintImage.color.r, tintImage.color.g, tintImage.color.b, 0.0f);
+
+        Instantiate(pauseButton, pauseButtonPosition, pauseButton.transform.rotation);
 
         UpdateHighScore();
         StartCoroutine(FadeIn(scoreText, 1f));
@@ -126,7 +140,7 @@ public class GameManager : MonoBehaviour
         {
             audioSource.clip = gameBackgroundMusic[Random.Range(0, gameBackgroundMusic.Length)];
             audioSource.Play();
-        }        
+        }     
 
     }
 
@@ -165,6 +179,75 @@ public class GameManager : MonoBehaviour
         scoreText.text = "Score: " + score.ToString();
         CheckHighscore();
         UpdateHighScore();
+    }
+
+    public void PauseGame()
+    {
+        currentTimeScale = Time.timeScale;
+        StartCoroutine(FadeIn(pauseMenu, 1f));
+        StartCoroutine(FadeIn(pauseIcon, 1f));
+        SetKinematic(true);
+        Instantiate(continueButton, continueButtonPosition, continueButton.transform.rotation);
+        Time.timeScale = 0.0f;
+    }
+
+    public void UnpauseGame()
+    {
+        StartCoroutine(FadeOut(pauseMenu, 1f));
+        StartCoroutine(FadeOut(pauseIcon, 1f));
+        SetKinematic(false);
+        Instantiate(pauseButton, pauseButtonPosition, pauseButton.transform.rotation);
+        Time.timeScale = currentTimeScale;
+
+    }
+
+    public void SetKinematic(bool isKinematic)
+    {
+        Fruit[] fruits = FindObjectsOfType<Fruit>();
+        foreach (Fruit fruit in fruits)
+        {
+            if (fruit.CompareTag("PauseButton"))
+            {
+                continue;
+            }
+            Rigidbody fruitRigidbody = fruit.GetComponent<Rigidbody>();
+            Rigidbody[] slices = fruit.GetComponentsInChildren<Rigidbody>();
+            Collider fruitCollider = fruit.GetComponent<Collider>();
+
+            if (isKinematic)
+            {
+                fruit.StoreVelocity();
+            }
+            else
+            {
+                fruit.ApplyStoredVelocity();
+            }
+
+            fruitRigidbody.isKinematic = isKinematic;
+            fruitCollider.enabled = !isKinematic;
+            foreach (Rigidbody slice in slices)
+            {
+                slice.isKinematic = isKinematic;
+            }
+        }
+        Bomb[] bombs = FindObjectsOfType<Bomb>();
+        foreach (Bomb bomb in bombs)
+        {
+            Rigidbody bombRigidbody = bomb.GetComponent<Rigidbody>();
+            Collider bombCollider = bomb.GetComponent<Collider>();
+
+            if (isKinematic)
+            {
+                bomb.StoreVelocity();
+            }
+            else
+            {
+                bomb.ApplyStoredVelocity();
+            }
+
+            bombRigidbody.isKinematic = isKinematic;
+            bombCollider.enabled = !isKinematic;
+        }
     }
 
     public void ActivateMultiplier(float multiplier, float duration)
@@ -430,7 +513,7 @@ public class GameManager : MonoBehaviour
         originalColor.a = 0;
         graphic.color = originalColor;
 
-        for (float t = 0.01f; t < duration; t += Time.deltaTime)
+        for (float t = 0.01f; t < duration; t += Time.fixedDeltaTime)
         {
             Color newColor = graphic.color;
             newColor.a = Mathf.Lerp(0, 1, t / duration);
@@ -446,7 +529,7 @@ public class GameManager : MonoBehaviour
     {
         Color originalColor = graphic.color;
 
-        for (float t = 0.01f; t < duration; t += Time.deltaTime)
+        for (float t = 0.01f; t < duration; t += Time.fixedDeltaTime)
         {
             Color newColor = graphic.color;
             newColor.a = Mathf.Lerp(1, 0, t / duration);
@@ -459,6 +542,77 @@ public class GameManager : MonoBehaviour
         graphic.gameObject.SetActive(false);
     }
 
-    
+    public IEnumerator FadeOutMeshRenderer(GameObject gameObject, float duration)
+    {
+        if (gameObject == null)
+        {
+            Debug.LogError("GameObject is null");
+            yield break;
+        }
+
+        MeshRenderer meshRenderer = gameObject.GetComponent<MeshRenderer>();
+        if (meshRenderer == null)
+        {
+            Debug.LogError("GameObject does not have a MeshRenderer component");
+            yield break;
+        }
+
+        Material material = meshRenderer.material;
+        if (material == null || !material.HasProperty("_Color"))
+        {
+            Debug.LogError("Material does not have a _Color property");
+            yield break;
+        }
+
+        Color initialColor = material.color;
+        float alpha = initialColor.a;
+
+        for (float t = 0; t < duration; t += Time.deltaTime)
+        {
+            float normalizedTime = t / duration;
+            Color newColor = new Color(initialColor.r, initialColor.g, initialColor.b, Mathf.Lerp(alpha, 0, normalizedTime));
+            material.color = newColor;
+            yield return null;
+        }
+
+        material.color = new Color(initialColor.r, initialColor.g, initialColor.b, 0);
+    }
+
+    public IEnumerator FadeInMeshRenderer(GameObject gameObject, float duration)
+    {
+        if (gameObject == null)
+        {
+            Debug.LogError("GameObject is null");
+            yield break;
+        }
+
+        MeshRenderer meshRenderer = gameObject.GetComponent<MeshRenderer>();
+        if (meshRenderer == null)
+        {
+            Debug.LogError("GameObject does not have a MeshRenderer component");
+            yield break;
+        }
+
+        Material material = meshRenderer.material;
+        if (material == null || !material.HasProperty("_Color"))
+        {
+            Debug.LogError("Material does not have a _Color property");
+            yield break;
+        }
+
+        Color initialColor = material.color;
+        float alpha = initialColor.a;
+
+        for (float t = 0; t < duration; t += Time.deltaTime)
+        {
+            float normalizedTime = t / duration;
+            Color newColor = new Color(initialColor.r, initialColor.g, initialColor.b, Mathf.Lerp(0, alpha, normalizedTime));
+            material.color = newColor;
+            yield return null;
+        }
+
+        material.color = new Color(initialColor.r, initialColor.g, initialColor.b, alpha);
+    }
+
       
 }

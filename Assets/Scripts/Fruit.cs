@@ -14,7 +14,7 @@ public class Fruit : MonoBehaviour
 
     protected List<GameObject> juiceSplatters = new List<GameObject>();
 
-    private MeshFilter outlineMesh;
+    protected MeshFilter outlineMesh;
 
     private GameObject quitButton;
 
@@ -27,6 +27,9 @@ public class Fruit : MonoBehaviour
     private Vector2 randomDirection;
     private float randomSpeed;
 
+    private Vector3 storedVelocity;
+    private List<Vector3> sliceStoredVelocities = new List<Vector3>();
+    private List<Rigidbody> sliceRigidbodies = new List<Rigidbody>();
     protected GameManager foundGameManager;
     public AudioClip fruitImpactClip;
 
@@ -50,7 +53,7 @@ public class Fruit : MonoBehaviour
                 outlineMesh = childTransform.GetComponentInChildren<MeshFilter>();
             }
         }
-         LoadJuiceSplatters();
+        LoadJuiceSplatters();
     }
 
     public virtual void Update()
@@ -70,13 +73,14 @@ public class Fruit : MonoBehaviour
         {
             foundGameManager.increaseSlicedFruitCount();
         }
-            if(foundGameManager.CheckIfCombo())
-            {
-                int comboCount = foundGameManager.getComboCount();
-                Vector3 popupPosition = transform.position;
-                ShowComboCount(comboCount);
-                StartCoroutine(AddComboScore(foundGameManager, comboCount, popupPosition));
-            }
+
+        if(foundGameManager.CheckIfCombo())
+        {
+            int comboCount = foundGameManager.getComboCount();
+            Vector3 popupPosition = transform.position;
+            ShowComboCount(comboCount);
+            StartCoroutine(AddComboScore(foundGameManager, comboCount, popupPosition));
+        }
 
 
         whole.SetActive(false);
@@ -149,6 +153,38 @@ public class Fruit : MonoBehaviour
             {
                 juiceSplatters.Add(splatter);
             }
+        }
+    }    
+
+    public void StoreVelocity()
+    {
+        storedVelocity = fruitRigidbody.velocity;
+        StoreSliceVelocities();
+    }
+
+    public void ApplyStoredVelocity()
+    {
+        fruitRigidbody.velocity = storedVelocity;
+        ApplySliceVelocities();
+    }
+
+    private void StoreSliceVelocities()
+    {
+        sliceRigidbodies.Clear();
+        sliceStoredVelocities.Clear();
+        Rigidbody[] slices = sliced.GetComponentsInChildren<Rigidbody>();
+        foreach (Rigidbody slice in slices)
+        {
+            sliceRigidbodies.Add(slice);
+            sliceStoredVelocities.Add(slice.velocity);
+        }
+    }
+
+    private void ApplySliceVelocities()
+    {
+        for (int i = 0; i < sliceRigidbodies.Count; i++)
+        {
+            sliceRigidbodies[i].velocity = sliceStoredVelocities[i];
         }
     }    
 

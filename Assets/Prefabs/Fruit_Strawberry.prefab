@@ -16,7 +16,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!65 &3638858742844353575
+--- !u!65 &8899582044836750786
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -27,8 +27,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.012209624, y: 0.012033125, z: 0.0080686305}
-  m_Center: {x: 0.00021459766, y: -0.000022508899, z: 0.0041105887}
+  m_Size: {x: 0.012209625, y: 0.012033124, z: 0.0080686305}
+  m_Center: {x: 0.00021459768, y: -0.000022508897, z: 0.0041105887}
 --- !u!54 &4724366125737920958
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -45,7 +45,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!65 &139122394934605720
+--- !u!65 &6648049360553094307
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -56,8 +56,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.0112213865, y: 0.011221388, z: 0.006165095}
-  m_Center: {x: -9.313225e-10, y: 0.000000001164153, z: -0.0030062746}
+  m_Size: {x: 0.011221387, y: 0.011221387, z: 0.0061650947}
+  m_Center: {x: -9.313226e-10, y: 0.000000001164153, z: -0.0030062743}
 --- !u!1 &4856601652244212735
 GameObject:
   m_ObjectHideFlags: 0
@@ -139,7 +139,7 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 2, z: 1.2}
+  m_Size: {x: 1, y: 1.2, z: 1.2}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6560547783397572787
 GameObject:
@@ -256,8 +256,8 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 0.5
-      minScalar: 0.3
+      scalar: 0.6
+      minScalar: 0.4
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -425,8 +425,8 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 3
-      scalar: 0.6
-      minScalar: 0.4
+      scalar: 1
+      minScalar: 0.6
       maxCurve:
         serializedVersion: 2
         m_Curve:

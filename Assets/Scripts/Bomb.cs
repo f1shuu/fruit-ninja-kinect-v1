@@ -22,6 +22,8 @@ public class Bomb : MonoBehaviour
     public AudioClip bombFuseClip;
     public AudioClip bombExplodeClip;
 
+    private Vector3 storedVelocity;
+
     private void Awake()
     {
         explosion = transform.GetChild(0).GetComponentInChildren<ParticleSystem>();
@@ -65,6 +67,16 @@ public class Bomb : MonoBehaviour
             FindObjectOfType<GameManager>().RemoveLife();
             bombCollider.enabled = false;
         }
+    }
+
+    public void StoreVelocity()
+    {
+        storedVelocity = GetComponent<Rigidbody>().velocity;
+    }
+
+    public void ApplyStoredVelocity()
+    {
+        GetComponent<Rigidbody>().velocity = storedVelocity;
     }
 
 
