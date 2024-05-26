@@ -78,9 +78,9 @@ public class GameManager : MonoBehaviour
         scoreColor = scoreText.color;
         doubleScoreColor = doubleScoreText.color;
         pauseButtonPosition =  Camera.main.ScreenToWorldPoint(new Vector3(100, 100, Camera.main.nearClipPlane));
-        pauseButtonPosition.z = 0;
+        pauseButtonPosition.z = -10;
         continueButtonPosition = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width / 2f + 100, Screen.height / 2f, 0f));
-        continueButtonPosition.z = -5;
+        continueButtonPosition.z = -10;
         LoadGameBackgroundMats();
 
         audioSource = GetComponent<AudioSource>();
@@ -181,74 +181,95 @@ public class GameManager : MonoBehaviour
         UpdateHighScore();
     }
 
-    public void PauseGame()
-    {
-        currentTimeScale = Time.timeScale;
-        StartCoroutine(FadeIn(pauseMenu, 1f));
-        StartCoroutine(FadeIn(pauseIcon, 1f));
-        SetKinematic(true);
-        Instantiate(continueButton, continueButtonPosition, continueButton.transform.rotation);
-        Time.timeScale = 0.0f;
-    }
+public void PauseGame()
+{
+    currentTimeScale = Time.timeScale;
+    StartCoroutine(FadeIn(pauseMenu, 1f));
+    StartCoroutine(FadeIn(pauseIcon, 1f));
+    Instantiate(continueButton, continueButtonPosition, continueButton.transform.rotation);
+    SetKinematic(true);
+    SetColliderEnabled(false);
+    Time.timeScale = 0.0f;
+}
 
-    public void UnpauseGame()
-    {
-        StartCoroutine(FadeOut(pauseMenu, 1f));
-        StartCoroutine(FadeOut(pauseIcon, 1f));
-        SetKinematic(false);
-        Instantiate(pauseButton, pauseButtonPosition, pauseButton.transform.rotation);
-        Time.timeScale = currentTimeScale;
+public void UnpauseGame()
+{
+    StartCoroutine(FadeOut(pauseMenu, 1f));
+    StartCoroutine(FadeOut(pauseIcon, 1f));
+    Time.timeScale = currentTimeScale;
+    Instantiate(pauseButton, pauseButtonPosition, pauseButton.transform.rotation);
+    SetKinematic(false);
+    StartCoroutine(EnableColliderDelayed());
+}
 
-    }
-
-    public void SetKinematic(bool isKinematic)
+public void SetKinematic(bool isKinematic)
+{
+    Fruit[] fruits = FindObjectsOfType<Fruit>();
+    foreach (Fruit fruit in fruits)
     {
-        Fruit[] fruits = FindObjectsOfType<Fruit>();
-        foreach (Fruit fruit in fruits)
+        if (fruit.CompareTag("PauseButton"))
         {
-            if (fruit.CompareTag("PauseButton"))
-            {
-                continue;
-            }
-            Rigidbody fruitRigidbody = fruit.GetComponent<Rigidbody>();
-            Rigidbody[] slices = fruit.GetComponentsInChildren<Rigidbody>();
-            Collider fruitCollider = fruit.GetComponent<Collider>();
-
-            if (isKinematic)
-            {
-                fruit.StoreVelocity();
-            }
-            else
-            {
-                fruit.ApplyStoredVelocity();
-            }
-
-            fruitRigidbody.isKinematic = isKinematic;
-            fruitCollider.enabled = !isKinematic;
-            foreach (Rigidbody slice in slices)
-            {
-                slice.isKinematic = isKinematic;
-            }
+            continue;
         }
-        Bomb[] bombs = FindObjectsOfType<Bomb>();
-        foreach (Bomb bomb in bombs)
+        Rigidbody fruitRigidbody = fruit.GetComponent<Rigidbody>();
+        Rigidbody[] slices = fruit.GetComponentsInChildren<Rigidbody>();
+
+        if (isKinematic)
         {
-            Rigidbody bombRigidbody = bomb.GetComponent<Rigidbody>();
-            Collider bombCollider = bomb.GetComponent<Collider>();
+            fruit.StoreVelocity();
+        }
+        else
+        {
+            fruit.ApplyStoredVelocity();
+        }
 
-            if (isKinematic)
-            {
-                bomb.StoreVelocity();
-            }
-            else
-            {
-                bomb.ApplyStoredVelocity();
-            }
+        fruitRigidbody.isKinematic = isKinematic;
 
-            bombRigidbody.isKinematic = isKinematic;
-            bombCollider.enabled = !isKinematic;
+        foreach (Rigidbody slice in slices)
+        {
+            slice.isKinematic = isKinematic;
         }
     }
+
+    Bomb[] bombs = FindObjectsOfType<Bomb>();
+    foreach (Bomb bomb in bombs)
+    {
+        Rigidbody bombRigidbody = bomb.GetComponent<Rigidbody>();
+
+        if (isKinematic)
+        {
+            bomb.StoreVelocity();
+        }
+        else
+        {
+            bomb.ApplyStoredVelocity();
+        }
+
+        bombRigidbody.isKinematic = isKinematic;
+    }
+}
+
+public void SetColliderEnabled(bool enabled)
+{
+    Fruit[] fruits = FindObjectsOfType<Fruit>();
+    foreach (Fruit fruit in fruits)
+    {
+        if (fruit.CompareTag("PauseButton"))
+        {
+            continue;
+        }
+        Collider fruitCollider = fruit.GetComponent<Collider>();
+        fruitCollider.enabled = enabled;
+    }
+
+    Bomb[] bombs = FindObjectsOfType<Bomb>();
+    foreach (Bomb bomb in bombs)
+    {
+        Collider bombCollider = bomb.GetComponent<Collider>();
+        bombCollider.enabled = enabled;
+    }
+}
+
 
     public void ActivateMultiplier(float multiplier, float duration)
     {
@@ -384,6 +405,12 @@ public class GameManager : MonoBehaviour
             }
         }
     }  
+
+    private IEnumerator EnableColliderDelayed()
+    {
+        yield return new WaitForSeconds(0.5f);
+        SetColliderEnabled(true);
+    }
 
     private IEnumerator PomegranateSequence()
     {

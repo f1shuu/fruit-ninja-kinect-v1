@@ -4771,7 +4771,7 @@ GameObject:
   - component: {fileID: 4415698692901806401}
   m_Layer: 0
   m_Name: ContinueButton
-  m_TagString: Untagged
+  m_TagString: PauseButton
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
