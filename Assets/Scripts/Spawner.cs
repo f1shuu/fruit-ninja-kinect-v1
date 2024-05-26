@@ -26,6 +26,7 @@ public class Spawner : MonoBehaviour
     public float maxBombLifeTime = 5f;
 
     public bool shouldSpawnBombs {get; set;}
+    public int spawnedBombCount {get; set;}
 
     private AudioSource audioSource;
 
@@ -42,6 +43,7 @@ public class Spawner : MonoBehaviour
     {
         StartCoroutine(Spawn());
         shouldSpawnBombs = true;
+        spawnedBombCount = 0;
     }
 
     private void OnDisable()
@@ -64,6 +66,7 @@ public class Spawner : MonoBehaviour
                 prefab = bombPrefab;
                 clip = throwBombSound;
                 maxLifeTime = maxBombLifeTime;
+                spawnedBombCount++;
             }
 
             Vector3 position = new Vector3();

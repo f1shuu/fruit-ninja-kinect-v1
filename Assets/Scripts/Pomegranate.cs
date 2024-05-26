@@ -117,5 +117,6 @@ public class Pomegranate : Fruit
             textMesh.text = "+ "+ points;
             foundGameManager.AddScore(points);
             foundGameManager.audioSource.PlayOneShot(foundGameManager.comboRewardClip, 0.6f);
+            foundGameManager.increaseSlicedFruitCount();
     }
 }

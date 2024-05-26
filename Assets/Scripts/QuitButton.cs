@@ -4,7 +4,6 @@ using System.Collections;
 public class QuitButton : Fruit
 {
 
-    public float lifeTime = 1f;
 
     public override void Update()
     {
@@ -25,7 +24,6 @@ public class QuitButton : Fruit
     {
         base.Slice(direction, position, force);
         transform.GetChild(3).gameObject.SetActive(false);
-        Destroy(transform.gameObject, lifeTime);
         
     }
 

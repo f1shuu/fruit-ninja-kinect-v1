@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     public GameObject startPopup;
     public GameObject pauseButton;
     public GameObject continueButton;
+    public GameObject gameOverButton;
     public Text scoreText;
     public Text highScoreText;
     public Text doubleScoreText;
@@ -17,12 +18,17 @@ public class GameManager : MonoBehaviour
     public Text frenzyText;
     public Text livesText;
     public Text timerText;
-    public Image fadeOutImage;
+    public Text bestComboText;
+    public Text bombsDodgedText;
+    public Text fruitsSlicedText;
     public Image tintImage;
     public Image iceTextbox;
     public Image iceFrame;
     public Image pauseMenu;
     public Image pauseIcon;
+    public Image fruitIcon;
+    public Image bombIcon;
+    public Image comboIcon;
 
     public AudioClip mainMenuMusic;
     public AudioClip gameStartClip;
@@ -63,7 +69,11 @@ public class GameManager : MonoBehaviour
     public bool isPomegranateSliced {get; set;}
     private Vector3 pauseButtonPosition;
     private Vector3 continueButtonPosition;
+    private Vector3 gameOverButtonPosition;
     private float currentTimeScale;
+
+    private int bestCombo;
+    private int bombsDodged;
 
 
     private void Awake()
@@ -81,6 +91,8 @@ public class GameManager : MonoBehaviour
         pauseButtonPosition.z = -10;
         continueButtonPosition = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width / 2f + 100, Screen.height / 2f, 0f));
         continueButtonPosition.z = -10;
+        gameOverButtonPosition = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width / 2f + 450, Screen.height / 2f - 250, 0f));
+        gameOverButtonPosition.z = -10;
         LoadGameBackgroundMats();
 
         audioSource = GetComponent<AudioSource>();
@@ -105,6 +117,8 @@ public class GameManager : MonoBehaviour
         comboCount = 1;
         slicedFruitCount = 0;
         score = 0;
+        bestCombo = 0;
+        bombsDodged = 0;
         lives = 3;
         time = 60.0f;
         scoreMultiplier = 1f;
@@ -349,6 +363,10 @@ public void SetColliderEnabled(bool enabled)
 
     public int getComboCount()
     {
+        if (comboCount > bestCombo)
+        {
+            bestCombo = comboCount;
+        }
         return comboCount;
     }
 
@@ -374,12 +392,36 @@ public void SetColliderEnabled(bool enabled)
 
     public void GameOver()
     {
-        blade.enabled = false;
+        ClearScene();
         spawner.enabled = false;
         specialSpawner.enabled = false;
+        fruitsSlicedText.text = "Fruits Sliced: " + slicedFruitCount.ToString();
+        bestComboText.text = "Best Combo: " + bestCombo.ToString();
+        bombsDodgedText.text = "Bombs Dodged: " + (spawner.spawnedBombCount - 3 + lives).ToString();
         StopAllCoroutines();
-        StartCoroutine(GameOverSequence());
+        StartCoroutine(FadeIn(pauseMenu, 1f));
+        StartCoroutine(FadeIn(fruitIcon, 1f));
+        StartCoroutine(FadeIn(bombIcon, 1f));
+        StartCoroutine(FadeIn(comboIcon, 1f));
+        StartCoroutine(FadeIn(bestComboText, 1f));
+        StartCoroutine(FadeIn(bombsDodgedText, 1f));
+        StartCoroutine(FadeIn(fruitsSlicedText, 1f));
+        Destroy(FindObjectOfType<PauseButton>().gameObject);
+        Instantiate(gameOverButton, gameOverButtonPosition, gameOverButton.transform.rotation);
         audioSource.PlayOneShot(gameOverClip);
+    }
+
+    public void callGameOverSequence()
+    {
+        blade.enabled = false;
+        StartCoroutine(FadeOut(pauseMenu, 1f));
+        StartCoroutine(FadeOut(fruitIcon, 1f));
+        StartCoroutine(FadeOut(bombIcon, 1f));
+        StartCoroutine(FadeOut(comboIcon, 1f));
+        StartCoroutine(FadeOut(bestComboText, 1f));
+        StartCoroutine(FadeOut(bombsDodgedText, 1f));
+        StartCoroutine(FadeOut(fruitsSlicedText, 1f));
+        TransitionManager.Instance.StartGameOverSequence();
     }
 
     public void TimesUp()
@@ -426,37 +468,6 @@ public void SetColliderEnabled(bool enabled)
     }
 
 
-    private IEnumerator GameOverSequence()
-    {
-        float elapsed = 0f;
-        float duration = 2f;
-
-        while (elapsed < duration)
-        {
-            float fadeOutProgress = Mathf.Clamp01(elapsed / duration);
-            fadeOutImage.color = Color.Lerp(Color.clear, Color.white, fadeOutProgress);
-
-            Time.timeScale = 1f - fadeOutProgress;
-            elapsed += Time.unscaledDeltaTime;
-
-            yield return null;
-        }
-        yield return new WaitForSecondsRealtime(1f);
-
-        ClearScene();
-        NewGame();
-        elapsed = 0f;
-
-        while (elapsed < duration)
-        {
-            float fadeOutProgress = Mathf.Clamp01(elapsed / duration);
-            fadeOutImage.color = Color.Lerp(Color.white, Color.clear, fadeOutProgress);
-
-            elapsed += Time.unscaledDeltaTime;
-
-            yield return null;
-        }        
-    }
 
     private IEnumerator Timer()
     {
