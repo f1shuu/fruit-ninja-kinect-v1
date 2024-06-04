@@ -78,7 +78,7 @@ public class KinectOverlayer : MonoBehaviour
 						if(OverlayObjectRight)
 						{
 							Vector3 vPosOverlay = Camera.main.ViewportToWorldPoint(new Vector3(scaleX, scaleY, distanceToCamera));
-							OverlayObjectRight.transform.position = Vector3.Lerp(OverlayObjectRight.transform.position, vPosOverlay, smoothFactor * Time.deltaTime * 10);
+							OverlayObjectRight.transform.position = Vector3.Lerp(OverlayObjectRight.transform.position, vPosOverlay, smoothFactor * Time.unscaledDeltaTime * 10);
 						}
 					}
 				}
@@ -109,7 +109,7 @@ public class KinectOverlayer : MonoBehaviour
 						if(OverlayObjectRight)
 						{
 							Vector3 vPosOverlay = Camera.main.ViewportToWorldPoint(new Vector3(scaleX, scaleY, distanceToCamera));
-							OverlayObjectLeft.transform.position = Vector3.Lerp(OverlayObjectLeft.transform.position, vPosOverlay, smoothFactor * Time.deltaTime * 10);
+							OverlayObjectLeft.transform.position = Vector3.Lerp(OverlayObjectLeft.transform.position, vPosOverlay, smoothFactor * Time.unscaledDeltaTime * 100);
 						}
 					}
 				}				

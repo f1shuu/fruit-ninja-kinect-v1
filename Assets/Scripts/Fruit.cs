@@ -1,29 +1,40 @@
 ﻿using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
+using TMPro;
 
 public class Fruit : MonoBehaviour
 {
     public GameObject whole;
     public GameObject sliced;
     public GameObject comboPopup;
+    protected Rigidbody fruitRigidbody;
+    protected Collider fruitCollider;
+    protected ParticleSystem juice;
 
-    private Rigidbody fruitRigidbody;
-    private Collider fruitCollider;
-    private ParticleSystem juice;
+    protected List<GameObject> juiceSplatters = new List<GameObject>();
+
+    protected MeshFilter outlineMesh;
 
     private GameObject quitButton;
 
     public int pointsValue = 10;
 
-    private bool isSliced = false;
+    protected bool isSliced = false;
 
     private float randomX;
     private float randomY;
     private Vector2 randomDirection;
     private float randomSpeed;
 
-    private GameManager foundGameManager;
+    private Vector3 storedVelocity;
+    private List<Vector3> sliceStoredVelocities = new List<Vector3>();
+    private List<Rigidbody> sliceRigidbodies = new List<Rigidbody>();
+    protected GameManager foundGameManager;
+    public AudioClip fruitImpactClip;
 
-    private void Awake()
+
+    public virtual void Awake()
     {
         fruitRigidbody = GetComponent<Rigidbody>();
         fruitCollider = GetComponent<Collider>();
@@ -34,46 +45,65 @@ public class Fruit : MonoBehaviour
         randomDirection.Normalize();
         randomSpeed = Random.Range(20f, 100f);
         foundGameManager = FindObjectOfType<GameManager>();
+        if(transform.childCount > 3)
+        {
+            Transform childTransform = transform.GetChild(3);
+            if(childTransform != null)
+            {
+                outlineMesh = childTransform.GetComponentInChildren<MeshFilter>();
+            }
+        }
+        LoadJuiceSplatters();
     }
 
-    private void Update()
+    public virtual void Update()
     {
         if(!isSliced)
         {
-            if(!CompareTag("Play Button") && !CompareTag("Quit Button"))
-            {
-                transform.Rotate(randomDirection * Time.deltaTime * randomSpeed);
-            }
-            else
-            {
-                transform.Rotate(Vector2.up * Time.deltaTime * 20);
-            }
+            transform.Rotate(randomDirection * Time.deltaTime * randomSpeed);
         }
-
     }
 
-    private void Slice(Vector3 direction = default(Vector3), Vector3 position = default(Vector3), float force = 0f)
+    public virtual void Slice(Vector3 direction = default(Vector3), Vector3 position = default(Vector3), float force = 0f)
     {
+        foundGameManager.audioSource.PlayOneShot(foundGameManager.fruitSliceClips[Random.Range(0, foundGameManager.fruitSliceClips.Length)]);
         isSliced = true;
-
-        if (!CompareTag("Play Button") && !CompareTag("Quit Button"))
-        {
         foundGameManager.AddScore(pointsValue);
-            if(foundGameManager.CheckIfCombo())
-            {
-                ShowComboCount(foundGameManager.getComboCount());
-            }
+        if(!foundGameManager.getIsFrenzy())
+        {
+            foundGameManager.increaseSlicedFruitCount();
+        }
+
+        if(foundGameManager.CheckIfCombo())
+        {
+            int comboCount = foundGameManager.getComboCount();
+            Vector3 popupPosition = transform.position;
+            ShowComboCount(comboCount);
+            StartCoroutine(AddComboScore(foundGameManager, comboCount, popupPosition));
         }
 
 
         whole.SetActive(false);
         sliced.SetActive(true);
+        if (outlineMesh)
+        {
+            Destroy(outlineMesh);
+        }
 
         fruitCollider.enabled = false;
         juice.Play();
+        foundGameManager.audioSource.PlayOneShot(fruitImpactClip);
 
-        // float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-        // StartCoroutine(RotateSliced(angle));
+
+        GameObject splatterPrefab = juiceSplatters[Random.Range(0, juiceSplatters.Count)];
+        Color juiceColor = juice.GetComponent<Renderer>().material.color;
+        Vector3 splatterPosition = transform.position;
+        splatterPosition.z += 4f;
+        GameObject splatter = Instantiate(splatterPrefab, splatterPosition, Quaternion.identity);
+        Splatter splatterScript = splatter.GetComponent<Splatter>();
+        splatterScript.InitializeSplatter(juiceColor, splatterPosition);
+
+        foundGameManager.audioSource.PlayOneShot(foundGameManager.splatterClips[Random.Range(0, foundGameManager.splatterClips.Length)]);
 
         Rigidbody[] slices = sliced.GetComponentsInChildren<Rigidbody>();
 
@@ -84,19 +114,8 @@ public class Fruit : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if(CompareTag("Play Button"))
-        {
-            quitButton = GameObject.FindWithTag("Quit Button");
-            Destroy(quitButton);  
-            FindObjectOfType<GameManager>().NewGame();
-          
-        }
-        if(CompareTag("Quit Button"))
-        {
-            Invoke("Quit", 1);
-        }        
+    public virtual void OnTriggerEnter(Collider other)
+    {    
         if (other.CompareTag("KinectPlayer")) 
         {
             KinectBlade blade = other.GetComponent<KinectBlade>();
@@ -114,17 +133,77 @@ public class Fruit : MonoBehaviour
         if(comboPopup)
         {
             var pop = Instantiate(comboPopup, transform.position, Quaternion.identity);
-            pop.GetComponent<TextMesh>().text = "Combo x " + comboCount;
+            pop.GetComponent<TextMeshPro>().text = "Combo x " + comboCount;
+            foundGameManager.audioSource.PlayOneShot(foundGameManager.sliceComboClips[comboCount % foundGameManager.sliceComboClips.Length], 0.6f);
         }
     }
 
-    private void Quit() {
-        #if UNITY_STANDALONE
-            Application.Quit();
-        #endif
-        #if UNITY_EDITOR
-            UnityEditor.EditorApplication.isPlaying = false;
-        #endif
-}
+    private void LoadJuiceSplatters()
+    {
+        juiceSplatters.Clear();
+
+        string folderPath = "Assets/Prefabs/Splatters";
+
+        string[] splatterGUIDs = UnityEditor.AssetDatabase.FindAssets("t:GameObject", new[] { folderPath });
+        foreach (string splatterGUID in splatterGUIDs)
+        {
+            string splatterPath = UnityEditor.AssetDatabase.GUIDToAssetPath(splatterGUID);
+            GameObject splatter = UnityEditor.AssetDatabase.LoadAssetAtPath<GameObject>(splatterPath);
+            if (splatter != null)
+            {
+                juiceSplatters.Add(splatter);
+            }
+        }
+    }    
+
+    public void StoreVelocity()
+    {
+        storedVelocity = fruitRigidbody.velocity;
+        StoreSliceVelocities();
+    }
+
+    public void ApplyStoredVelocity()
+    {
+        fruitRigidbody.velocity = storedVelocity;
+        ApplySliceVelocities();
+    }
+
+    private void StoreSliceVelocities()
+    {
+        sliceRigidbodies.Clear();
+        sliceStoredVelocities.Clear();
+        Rigidbody[] slices = sliced.GetComponentsInChildren<Rigidbody>();
+        foreach (Rigidbody slice in slices)
+        {
+            sliceRigidbodies.Add(slice);
+            sliceStoredVelocities.Add(slice.velocity);
+        }
+    }
+
+    private void ApplySliceVelocities()
+    {
+        for (int i = 0; i < sliceRigidbodies.Count; i++)
+        {
+            sliceRigidbodies[i].velocity = sliceStoredVelocities[i];
+        }
+    }    
+
+    public IEnumerator AddComboScore(GameManager foundGameManager, int comboCount, Vector3 popupPosition)
+    {
+        yield return new WaitForSeconds(foundGameManager.comboTimeWindow - 0.01f);
+
+        if(foundGameManager.getComboCount() == comboCount)
+        {
+            var pop = Instantiate(comboPopup, popupPosition, Quaternion.identity);
+            int points = comboCount * 5 + comboCount / 10 * 50;
+            var textMesh = pop.GetComponent<TextMeshPro>();
+            textMesh.text = "+ "+ points;
+            foundGameManager.AddScore(points);
+            foundGameManager.audioSource.PlayOneShot(foundGameManager.comboRewardClip, 0.6f);
+        }
+
+    }
+
+      
 
 }

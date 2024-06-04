@@ -8,11 +8,15 @@ ModelImporter:
     100004: //RootNode
     100006: Light
     100008: Top
+    100010: Watermelon_Bottom
+    100012: Watermelon_Top
     400000: Bottom
     400002: Camera
     400004: //RootNode
     400006: Light
     400008: Top
+    400010: Watermelon_Bottom
+    400012: Watermelon_Top
     2000000: Camera
     2100000: green2
     2100002: green1
@@ -24,11 +28,27 @@ ModelImporter:
     2100014: M_Watermelon_Red
     2100016: M_Watermelon_White
     2100018: M_Watermelon_Black
+    2100020: Watermelon_Dark_Green
+    2100022: Watermelon_Light_Green
+    2100024: Watermelon_Red
+    2100026: Watermelon_White
+    2100028: Watermelon_Black
+    2100030: Watermelon_Dark_Green.001
+    2100032: Watermelon_Light_Green.001
+    2100034: Watermelon_Red.001
+    2100036: Watermelon_White.001
+    2100038: Watermelon_Black.001
     2300000: Bottom
     2300002: Top
+    2300004: Watermelon_Bottom
+    2300006: Watermelon_Top
     3300000: Bottom
     3300002: Top
+    3300004: Watermelon_Bottom
+    3300006: Watermelon_Top
     4300000: Top
+    4300002: Watermelon_Top
+    4300004: Watermelon_Bottom
     10800000: Light
   externalObjects: {}
   materials:

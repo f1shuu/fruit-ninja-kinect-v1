@@ -6,9 +6,13 @@ ModelImporter:
     100000: Bottom
     100002: //RootNode
     100004: Top
+    100006: Banana_Bottom
+    100008: Banana_Top
     400000: Bottom
     400002: //RootNode
     400004: Top
+    400006: Banana_Bottom
+    400008: Banana_Top
     2100000: Yellow
     2100002: blackasfuck
     2100004: mleczny
@@ -16,12 +20,22 @@ ModelImporter:
     2100008: Black
     2100010: Milky
     2100012: Whatevercoloristhis
+    2100014: Banana_Yellow
+    2100016: Banana_Black
+    2100018: Banana_Milky
+    2100020: Banana_Brown
     2300000: Bottom
     2300002: Top
+    2300004: Banana_Bottom
+    2300006: Banana_Top
     3300000: Bottom
     3300002: Top
+    3300004: Banana_Bottom
+    3300006: Banana_Top
     4300000: Bottom
     4300002: Top
+    4300004: Banana_Bottom
+    4300006: Banana_Top
   externalObjects: {}
   materials:
     importMaterials: 1

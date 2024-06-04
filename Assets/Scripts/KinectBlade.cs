@@ -4,7 +4,7 @@ public class KinectBlade : MonoBehaviour
 {
     private Camera mainCamera;
     private Collider bladeCollider;
-    private TrailRenderer bladeTrail;
+    private ParticleSystem bladeTrail;
     private bool slicing;
     private Vector3 lastBladePosition;
     
@@ -18,7 +18,7 @@ public class KinectBlade : MonoBehaviour
     {
         mainCamera = Camera.main;
         bladeCollider = GetComponent<Collider>();
-        bladeTrail = GetComponentInChildren<TrailRenderer>();
+        bladeTrail = GetComponentInChildren<ParticleSystem>();
         lastBladePosition = followTarget.transform.position;
     }
 
@@ -61,7 +61,7 @@ public class KinectBlade : MonoBehaviour
 
         slicing = true;
         bladeCollider.enabled = true;
-        bladeTrail.enabled = true;
+        bladeTrail.Play();
         bladeTrail.Clear();
     }
 
@@ -69,7 +69,7 @@ public class KinectBlade : MonoBehaviour
     {
         slicing = false;
         bladeCollider.enabled = false;
-        bladeTrail.enabled = false;
+        bladeTrail.Stop();
     }
 
     private void ContinueSlicing()

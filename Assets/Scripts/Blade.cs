@@ -4,7 +4,7 @@ public class Blade : MonoBehaviour
 {
     private Camera mainCamera;
     private Collider bladeCollider;
-    private TrailRenderer bladeTrail;
+    private ParticleSystem bladeTrail;
     private bool slicing;
     
     public Vector3 direction { get; private set; }
@@ -15,7 +15,7 @@ public class Blade : MonoBehaviour
     {
         mainCamera = Camera.main;
         bladeCollider = GetComponent<Collider>();
-        bladeTrail = GetComponentInChildren<TrailRenderer>();
+        bladeTrail = GetComponentInChildren<ParticleSystem>();
     }
 
     private void OnDisable()
@@ -53,7 +53,7 @@ public class Blade : MonoBehaviour
 
         slicing = true;
         bladeCollider.enabled = true;
-        bladeTrail.enabled = true;
+        bladeTrail.Play();
         bladeTrail.Clear();
     }
 
@@ -61,7 +61,7 @@ public class Blade : MonoBehaviour
     {
         slicing = false;
         bladeCollider.enabled = false;
-        bladeTrail.enabled = false;
+        bladeTrail.Stop();
     }
 
     private void ContinueSlicing()

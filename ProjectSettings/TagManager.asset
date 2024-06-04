@@ -5,8 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - KinectPlayer
-  - Play Button
-  - Quit Button
+  - PauseButton
   layers:
   - Default
   - TransparentFX

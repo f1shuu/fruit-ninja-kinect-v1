@@ -14,9 +14,15 @@ ModelImporter:
     2100012: orange.001
     2100014: orangeyelow.001
     2100016: yelow.001
+    2100018: Mango_Orange_Red
+    2100020: Mango_Red
+    2100022: Mango_Orange
+    2100024: Mango_Orange_Yellow
+    2100026: Mango_Yellow
     2300000: //RootNode
     3300000: //RootNode
     4300000: Sphere
+    4300002: Mango
   externalObjects: {}
   materials:
     importMaterials: 1
