@@ -87,11 +87,11 @@ public class GameManager : MonoBehaviour
         freezeColor = freezeText.color;
         scoreColor = scoreText.color;
         doubleScoreColor = doubleScoreText.color;
-        pauseButtonPosition =  Camera.main.ViewportToWorldPoint(new Vector3(0.1f, 0.1f, 0.5f));
+        pauseButtonPosition =  Camera.main.ViewportToWorldPoint(new Vector3(0.05f, 0.1f, 0f));
         pauseButtonPosition.z = -10;
-        continueButtonPosition = Camera.main.ViewportToWorldPoint(new Vector3(0.6f, 0.5f, 0.5f));
+        continueButtonPosition = Camera.main.ViewportToWorldPoint(new Vector3(0.6f, 0.5f, 0f));
         continueButtonPosition.z = -10;
-        gameOverButtonPosition = Camera.main.ViewportToWorldPoint(new Vector3(0.75f, 0.35f, 0.5f));
+        gameOverButtonPosition = Camera.main.ViewportToWorldPoint(new Vector3(0.8f, 0.3f, 0f));
         gameOverButtonPosition.z = -10;
         LoadGameBackgroundMats();
 
