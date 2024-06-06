@@ -73,7 +73,6 @@ public class GameManager : MonoBehaviour
     private float currentTimeScale;
 
     private int bestCombo;
-    private int bombsDodged;
 
 
     private void Awake()
@@ -118,7 +117,6 @@ public class GameManager : MonoBehaviour
         slicedFruitCount = 0;
         score = 0;
         bestCombo = 0;
-        bombsDodged = 0;
         lives = 3;
         time = 60.0f;
         scoreMultiplier = 1f;
